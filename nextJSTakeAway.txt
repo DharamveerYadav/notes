@@ -1,0 +1,370 @@
+1. Context API
+const Context  = React.createContext("");
+const [text, setText] = useState("");
+<Context.Provider value={{text, setText}}>
+</Context.Provider>
+const {text,setText} = useContext(context);
+
+should be use for themming, multilingual and storing of authentication object.
+
+
+
+
+****************************************************************************
+What NextJS  on top of ReactJS
+Rendering : NextJS render on server side 
+Search Engine Optamization: Easy crwaling and indexing 
+Routing: we will have to install react-routing-dom , NextJS has inbuilt file based routing system 
+Ability to build Full stack  application 
+code splitting
+NextJS is extension to ReactJS
+
+
+1. Routing : 
+ file based routing system
+ for React:
+ <BrowserRouter>
+   <Routes>
+      <Route>
+	   <Route path=":postId" element={<Post />} />
+	   
+NextJS 
+     folderName [postId] => page.js
+
+for loading => loading.js file 
+for error => error.js file, must be client component with one reset buttn 	 
+ 
+
+2. SEO
+3. Ability to create full stack applications
+     from version 9 - api routes using route.js
+4. Automatic code splitting 
+     in react we need to use lazy but here it is automatic 
+	 if navigate to any page, resource related to that only load
+
+5. Data fetching: 
+       server side rendering - SSR no cache store
+	   static site generation - SSG  
+	   Incremental static generation - ISR
+default use static site generation - store the cache 
+{next: {revalidate: 10}} would be incremental static generation 
+
+6. Serverless route handler 
+  normally -- will use express and create a server which listen at perticular port 
+  in nextJS --- 
+            create route.js file 
+			both page.js and route.js can not be at same place ( expect root level)
+			Simply rite GET, POST method and return Response. not need to setup xtra express configuration 
+			
+7. Metadata api
+	static and dynamic 
+    for static export metadaya attribute
+    for dynamic export generateMetadata	
+
+
+8. steps in client side rendering
+server send request to browser => browser than download the javascript => execute the javascript => page is visible 
+but for server side rendering 
+server send ready to be rendered HTML response to browser => browser render the html, page is visible => Browser download the javascript and execute the React => page become interactive this process is call hydration 
+
+9. getStaticProps always run to server side for static content, will generate ready to use html
+
+10. getServerSideProps run at request time if data update frequently
+
+11. getStaticPaths, use for generating static path while using getStaticProps for dynamically 
+SSG pre-renders a page at build time, creating static HTML files served to users, while SSR renders the page on each request at runtime.
+
+These 3 params no longer supported in version 13 or in app directory 
+
+
+export async function getStaticProps(context){
+const { params } = context;
+const response = await fetch("api url");
+const data = await response.json();
+
+return {
+  props: {
+     data
+  }
+}
+
+to support this we need to define static paths as well
+
+export async function getStaticPaths(){
+const { params } = context;
+const response = await fetch("api url");
+
+const post  = response.map((post ) => {
+  return {
+      params: {id}
+  }
+
+});
+
+return {
+paths: post,
+fallback: false
+}
+
+}
+ 
+
+12. Error components must be client components to get recognize
+   
+13. NextJS by default do static site generation 
+use incremental static Generation(ISR) {next: {revalidate: 10}} use both SSR and SSG
+
+14. regular page.js and route.js can be together 
+
+15. static metaata and dynamic matadata
+
+static metadata => export metadata object 
+dynamic matadata => export async generateMetadata metadata which will have access of the params
+
+16. Public folder would be directly accessabile using src="/assests/images/logo.svg";
+
+17 HOC should be marked use client , like SessionProvider
+
+18. in Mongoose models object has all the schema and can be validated before creating the new one.
+
+19. to get the current session, use useSession from next-auth/react
+const {data: session } = useSession(); session.user
+
+20. to make google authentication to work
+configure authorized redirect URIs as http://localhost:3000/api/auth/callback/google
+
+NextJS 14 new features:
+1. Read react 19 such as concurrent rendering and useTransition hook 
+2. Built in image optimizer using quality props
+ <Image
+        src="/image.png"
+        alt="My image"
+        width={500}
+        height={500}
+        quality={75}
+      />
+    </div>
+It will compress image to 25% 	
+
+
+**********************************************************************
+decsion have to make while working with React
+1. Routing 
+2. Data fetching, 	Server side rendering 
+3. Search Engine Optamization
+4. Image Optamization
+5. Bundling, code splitting and Deployment
+
+NextJS features: 
+1. File System routing 
+2. Client and Server Rendering
+3. Dara fetching and Server Actions
+4. Image and font optimization
+5. React Server Components
+6. Middleware
+
+Global style classes can be imported in the Rootl level layout but as a css moudle
+global.css can only be imported in _app.js file 
+Generate static params used for creating dynamic routes 
+
+
+programmatically navigation: useRouter
+
+const router = userRouter();
+router.push("/nextpage");
+
+
+Server side  vs static generation
+1. GetServerSideProps execute on every request, getStaticProps execute at build time.
+2. suitable for dynamic content, Ideal for static pages
+3. return an object with Props keys, Return an object with props keys but may also include a revalidate for incremental static generation
+
+
+getStaticPaths used at build time for creating dynamic paths
+
+
+*****************************************************************************
+
+1. client component can be keep inside server component, if whole or a big page is server component and there is a tiny client component, this is possible scenrio
+
+
+**********************************************************
+Udemy:
+
+1. two type of routes 
+A. App route and page routes
+recommanded is App routes
+
+2. error.js must be client component
+3. not-found.js page is server side component.
+4. if we call notFound() special function from next/navigation, will load nearest not-found page
+
+form can be executed in server side
+
+async function formHandler(formData) {
+'use server' // means this function will excecute on server only
+// for extracting form values use use formData class
+
+const meals = {
+  title: formData.get("title");
+}
+}
+
+<form className={class} action={formHandler}>
+
+useFormStatus() hook from 'react-dom' used for getting status
+
+useFormState use for form state
+
+
+next js on build process generate static pages , and pages will not get updated if new data added
+we can use revalidatePath() from next/cache can be use to revalidate specefic path
+
+revalidatePath('/meals') only /meals path will get validate, not nested one 
+for revalidating nested one revalidatePath('/meals', 'layout');
+
+dynamic metadata:
+
+export async function generateMetadata( {params}) {
+then return metadata object
+}
+
+Parallel Routes:
+
+create folder name with prefix @
+@archive, @latestArchive
+containing folder must include layout.jsx and layout.jsx will have props named as archive and latestArchive
+
+if we are adding child route in one of paraller route than add default.js to other one, other will get notFound error
+
+Catch-all routes [[...route]], will catch all the routes /a/b/c etc. and param would be an array
+
+Child folder of dynamic routes has access to params props
+/[slug]/images => image  page will have access to slug param
+
+intercepting routes: 
+to difference if user came using navigation or direct link entry 
+to load navigation  add folder name (.)image or coming using navigation, and if hitting url directly (.) not required
+
+useRouter use for navigation imported from next/navigation
+
+routeGroup is very useful for different pages and layout 
+its use for bundling and separatting defing route path
+folder name with (content) or (marketing), it does not includ in the route path
+(content) => about and (marketing) => about, both will resolve to about route
+we can apply different layout to different group
+same name should not given to route name in differnet groups
+useOptimistice hook to render client state faster 
+
+
+==>>> create understanding of server action: 
+
+inside component 
+
+async function formHandler(formData){
+'use server';
+
+object can be prepare using formData object by formData.get("name");
+
+}
+
+
+====>>>> caching 
+Request memoization 
+Data caching 
+Full route caching 
+Router caching 
+
+// reserved words 
+export const revalidate = 5; will be picked by next js itself 
+export const dynamic = "force-dynamic" same as cache: "no-store"
+
+with fetch call 
+fetch(url, {cache: "no-store"}) ==> default for next 15, for next 14 it was "force-cache"
+fetch(url, {
+    next: {revalidate: 5}
+});
+
+revalidateTag("msg") => for revalidating the specefic tagged fetch calls
+
+fetch(url, {next: {tags: ["msg"]}})
+
+====>>>>>>>>>>>>>>>>page routing:
+
+export async const getStaticProps = () => {
+return {props: {key: value}}
+
+}
+
+first getStaticProps get execute and prepare props for the function than function excecute
+getStaticProps use at build time
+
+ISR: Incremental static regeneration: re-generate page after X secs using revalidate key
+
+export async const getStaticProps = () => {
+ return {props: {},
+          revalidate: 10,// for revalidating after 10 secs 
+		  notFound: true // if don't want to load this page, might be require in case some mandatory data is not there
+		  redirect: {
+		           destination: "/not-found"  // or want to redirect at some other page is data is not present  
+		 }
+		  } 
+		  
+}
+
+if we woring with getStaticPaths and its only for dynamic routes 
+
+export async function getStaticPaths() {
+
+  paths = return [ { params: { pageId }}];
+  
+  return {
+     paths: paths,
+	 fallback: true/false/blocking
+     }
+
+}
+
+if fallback set to true, no need to generate all paths as statically, 
+we can generate some paths at request time 
+if fallback set to false, will not generate paths at request time
+if fallback is set to blocking, no need to set isLoading, it will wait to resolve props or path 
+
+
+Next.js 14 introduces a server-centric approach with the App Router,
+
+
+API routes ==>>>
+
+inside getStaticProps and getServerSideProps, don't call api routes instead use code directly written in the routes without
+sending api request, coz running on same server
+
+
+***********************************React 18 and React 19
+
+React 18:
+
+import  ReactDOM from 'react-dom/client'
+
+and 
+const root  =  ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />)
+
+added features: 
+
+Concurrency; state update prioritization 
+UseTransition hook,
+useDefferredValue
+
+
+React 19:
+
+formAction: client side feature
+work with form 
+<form action={formAction}>
+
+async function formAction(formData) {
+const email = formData.get("email)
+const {pending } = useformStatus() ==> current form status, use for disabling button 
+useActionState
+useOptimistic hook 
