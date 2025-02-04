@@ -1,13 +1,18 @@
 All JavaScript identifiers are case sensitive
 prototype based object oriented language
 Prototypes are the mechanism by which JavaScript objects inherit features from one another.
-JavaScript is often described as a prototype-based language — to provide inheritance, objects can have a prototype object, which acts as a template object that it inherits methods and properties from.
+JavaScript is often described as a prototype-based language — to provide inheritance, objects can 
+have a prototype object, which acts as a template object that it inherits methods and properties 
+from.
 
-1. closure in javascript => inner function close on property or say lock, if any value pass to outer function and inner function do some async task it will gurantee that it will execute on that value 
+1. closure in javascript => inner function close on property or say lock, if any value pass to outer
+ function and inner function do some async task it will gurantee that it will 
+ execute on that value 
 const hello = (event) => {
 
    innerFunction(){
-   using event here, then this function lock in with the current value of event and will gurantee of execution with the current value
+   using event here, then this function lock in with the current value of event and will 
+   gurantee of execution with the current value
    }
    
    
@@ -32,6 +37,10 @@ test.testchar
 test.privateVar()
 
 2. What is context in javascript, how to change context, what method is used ( using apply and call)
+The difference between call() and bind() is that the call() sets the this keyword and executes the function immediately and it does not create a new copy of the function, 
+while the bind() creates a copy of that function and sets the this keyword.
+
+
 3. what is Grunt, Gulp and webpack 
 4. What is Jamine, Mocha and karma
 5. What is callback function
