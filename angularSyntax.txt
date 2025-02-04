@@ -1,0 +1,34 @@
+Constructor
+ngOnChange
+ngOnInit
+ngDoCheck
+
+ngAfterContentInit
+ngAfterContentChecked
+ngAfterViewInit
+ngAfterViewChecked
+
+ngOnDestroy
+
+
+loadChildren: () => import('./items/items.module).then(m => m.ItemsModule)
+
+
+[className], [class.name]="condition"
+[ngClass]
+[ngClass]={
+"className": condition
+}
+
+Need to import FormModule
+#f="ngForm" (ngSubmit)=  
+[(ngModel)]=
+
+ReactiveFormModule
+[formGroup]="form"
+formControlName=
+constructor(fb: FormBuilder)
+this.form = fb.group({
+     "firstName" = new FormControl("", Validator.required);
+	 "password" =  new FormControl("", Validator.required);
+})

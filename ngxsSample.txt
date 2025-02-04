@@ -1,0 +1,65 @@
+IUser --> const initialUser --> interface AppState add here user: IUser
+
+export enum EUserAction {
+
+ GetUsers = [User] Get Users
+ 
+ export class getUser implement Action from @Ngrx/store{
+  public readonly type = EUserAction.GetUsers;
+  constructor(public payload: IUser[])
+  }
+  
+  
+  const userReducer = (
+  
+  state: initialUser,
+  action: UserActions
+  ): IUserState => {
+  
+  switch(action.type)
+  case EUserAction.UserSuccess: {
+  
+   return {
+   ...state,
+   user: action.payload
+   }
+   
+   
+   
+And finally AppReducer 
+ActionReducerMap --- @Ngrx/store
+reducerReducer === @ngrx/router-store
+export const appReducers: ActionReducerMap<IAppState, any> = {
+
+route: routerReducer,
+user: userReducer
+
+
+
+
+@Injectable()
+export class UserEffect {
+@Effect()
+getUser$ = this.actions.pipe (
+ofType<GetUser>(EUserAction.GetUser),
+map(action => action.payload),
+switchMap(() => this.userservice.getUser()),
+switchMap((userHttp) => of(new GetUserSuccess(userHttp)))
+
+
+const selectUser = (state: IAppState) => state.users;
+
+export const selectedUser = createSelector(
+selectedUser,
+(state: IUserState) => state.user
+
+
+StoreModule.forRoot(appReducers)
+EffectModule.forRoot([
+StoreRouterConnectingModule.forRoot({stateKey: 'router'})
+
+this.store.pipe(select(getuser))
+
+this.store.dispatch(new GetUser())
+
+

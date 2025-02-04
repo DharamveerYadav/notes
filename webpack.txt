@@ -1,0 +1,12 @@
+Webpack: budler with plugins and loaders 
+1. should have one entry file or can have multiple 
+2. then it will load all the dependices starting from entry files
+3. loader like babel-loader, css-loader -- file type dependent transformation 
+4. once loader finish there job, plugins come in picture like uglify and do global transformation
+5. output/ (e.g. dist/bundle.js) correctly ordered concatenated output 
+
+
+elements in webpack.config.js
+entry
+output -- path for bundle.js
+modules and config loaders inside it 

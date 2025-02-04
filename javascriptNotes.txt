@@ -1,0 +1,291 @@
+1. Different data types in javascript:
+Number, String, Boolean, undefined, null
+2. function declaration function (Hoisted(i.e., can be referenced before they're declared)) and expression function
+3. function and variable are hoisted in javascript but variable defined with undefined ( Will be in temporal dead zone) and will assign value at execution time
+4. every function create scope but block function like if/ while block do not create scops in javascript
+5. lexical scoping . a function that is lexically with another function get access to the scope of outer function
+6. Execution stack is order in which functions are called, scope chain is order in which function are written in code
+7. 'this' stores execution context object, 'this' point to the object that is calling the method and regular function call it is attached to global object
+
+
+
+var john = {
+  name: 'john',
+  age: 34,
+  calculateAge: function() {
+  console.log(this);  // will have john object as exection context
+	}
+  
+  function inner(){
+  console.log(this) // will have global object aka window as its is function call though it is inside function
+  }
+  inner();
+}
+
+john.calculateAge();
+
+
+8. Method borrowing 
+var mike = {
+name: 'Mike',
+age: 45
+}
+mike.calculateAge = john.calculateAge;
+
+mike.calculateAge() // Now this will have mike object not john though it is defined inside john
+
+9. Prototype property of an object is where we put method and properties that we want other object to inherit
+10. The Constructor's prototype property is not the prototype of constructor itself, it's the prototype of All instances that are created throught it.
+11. Object.create inherit directly from object while on the other hand newly created object inherit from constrctor prototype ( these are two type of inheritance )
+
+var personProto = {
+calculateAge: function(){
+return 2020 - this.yearOfBirth
+}
+)
+
+var john = Object.create(personProto, 
+{
+    name : { value: 'John'},
+	yearOfBirth : { value : 1990 }
+})
+
+12. Immediatly invoked Function Expression (IIFE) used for data privacy or modular approach, it create a seperate scope
+
+(function (){
+var score = Math.random() * 10;
+console.log(score > 5);
+})()
+
+IIFE used for creating private variables methods used for encapulation
+
+var projectBudget = (function(){
+                     var x = 43;   // private
+					 var add = function(a) // private
+					           {
+							   return a + x;
+							   }
+				return {
+				    publicMethod : function(p) {
+					   console.log(add(p))
+					 }
+                }
+        })();	
+
+IIFE exection happened while declaring variable and it return publicMethod to porjectBudgt variable ( var x and add removed once method return values)	
+
+10. Closure : An inner function has always access to variable and parameters of its outer function, even after the outer function has returned.
+
+function retirement(retirementAge){
+ var a = 'years left for retirement';
+  return function(birthYear){
+  var currentAge = 2018 - birthYear;
+  console.log(retirementAge - currentAge + " " + a)
+  }
+ }
+
+retirementAge(66)(1998);
+
+11. var delcare in function scope and let and const declare in block scope
+12. In Method call this keyword point to object but in function call this keyword points to Global object
+13. Destructure Array and Object call destructuring 
+ const [name1, name2] = name;
+ var name = {
+        name1: 'test1',
+		name2: 'test2'
+		}
+  const { name1, name2 } =  name;  // key should match new variable
+  
+14. querySelector return node list, need to convert to Array
+   var boxes = document.querySelectorAll(.box);
+   var ArrayBoxes = Array.prototype.slice.call(boxes);   
+   
+   // ES6 
+   var ArrayBoxes = Array.from(boxes);
+
+15. Spread used in function call while Rest used in function declaration for accepting arbitrary parameter   
+16. Maps is new in ES6
+17. For deleteting a key in Map use map.delete(key)
+18. for( let [key, value] of map.entries()){} // one of example of destructuring
+
+19 Inheritance in ES5
+JavaScript does not support multiple inheritance. Inheritance of property values occurs at run time by JavaScript searching the prototype chain of an object to find a value. Because an object has a single associated prototype, JavaScript cannot dynamically inherit from more than one prototype chain.
+
+var Person = function(firstName, lastName, yearOfBirth)
+{
+   this.firstName = firstName;
+   this.lastName = lastName;   
+   this.yearOfBirth = yearOfBirth;
+   }   
+   
+ Person.prototype.calculateAge = 
+   function(){
+   return new Date().getFullYear() - this.yearOfBirth;
+   }
+ }
+
+var john = new Person('John', 'Millar', 1990); 
+
+// ES6
+
+class Person {
+constructor(firstName, lastNamel, yearOfBirth)
+{
+this.firstNamel = firstName;
+this.lastName = lastName;
+this.yearOfBirth = yearOfBirth
+}
+
+calculateAge()
+{
+console.log(new Date().getFullYear() - this.yearOfBirth)
+}
+
+static printSomething(){
+  console.log('This is static method');
+}
+
+let john = new Person('John', 'Millar', 1990);   
+
+ Static method does not inhrit with instance though can be access with class name Person.printSomething();
+ 
+20. classes are not hoisted.
+21. creating subclass using ES5
+
+var Employee = function(firstName, lastName, yearOfBirth, job, company)
+{
+Person.call(this, firstName, lastName, yearOfBirth);  // Here this keyword will Employee object reference and will create new properties in Employee variable just like how New keyword behave
+this.job = job;
+this.company = company;
+} 
+Employee.prototype = Object.create(Person.prototype);  // Object.create allows us set prototype chain manually
+
+22. Promises are for avoiding callback hell
+23. ES8/ ES2017 included async await
+24. Async keyword makes a function async and there is no problem if we block this function any way this run in async mood in background
+25. Babel used for converting ESNext to ES5
+26. webpack version 4 currently using support zero configuration it has four concept Entrypoint, output,plugin and loaders
+27. Fundamentally, scope is function based while context is object based. In other words, scope pertains to the variable access of a function when it is invoked and is unique to each invocation. Context is always the value of the this keyword which is reference to the object that 'own' the currently execution code.
+28. "Use Strict" new feature in ES5, put it either on top of the file or inside in a function 
+29. "getter and setter" accessor or computed properties. They are essentially function that executed on getting and setting a value. but look like regular property to an external code.
+30. The for...in statement is useful for iterating over object properties, but to iterate over iterable objects like arrays and strings, we can use the for...of statement. The for...of statement is a newer feature as of ECMAScript 6.
+
+31. Call and Apply used for a function to be run in a specific this context
+const book = {
+   title: 'Book title',
+   author: 'Vikram bhatt'
+   }
+   
+  function summary(arg...){
+  console.log(`${this.title} is written by ${this.author}`)
+}
+
+summary() // Here both the value in summary function would be undefined as this context itself is undefined here
+to run Summary in the context of book use call and apply 
+summary.call(book, arg...) or summary.apply(book, [arg..]) would print correct result
+Call take arguments in comma seperated form, and apply takes in array format
+  
+  
+let racer = function() {
+  setTimeout(() => console.log("timeout"), 0);
+  setImmediate(() => console.log("immediate"));
+  process.nextTick(() => console.log("nextTick"));
+  console.log("current event loop");
+}
+
+racer()
+
+current event loop
+nextTick
+timeout
+immediate
+
+
+
+process.nextTick, which puts its callback at the front of the event queue. It will execute after the code currently being executed but before any I/O events or timers.
+we passed setTimeout a timeout of 0, there's no additional enforced delay before its execution, and it is placed on into the timer queue during the next loop
+ setImmediate, which is clearly not as immediate as its name suggests! Its callback is placed in the check queue of the next cycle of the event loop. Since the check queue occurs later than the timer queue, setImmediate will be slower than setTimeout 0.
+ 
+Timers: callbacks from setInterval or setTimeout
+IO callbacks: callbacks from I/O events
+Idle: used internally by Node between IO and Poll phases
+Poll: retrieve new I/O events
+Check: callbacks from setImmediate execute here
+Close: handle closed connections like sockets
+
+
+No, JavaScript doesn't natively support overloading, but TypeScript does.However, overloading can be performed in JavaScript by having a function return a different output when not all possible parameters are passed to it.  
+
+var x = 21;
+var girl = function () {
+    console.log(x);
+    var x = 20;
+};
+girl ();
+
+It will print undefined as it has local scoped variable x and which is not defined yet, so will not look for global
+It local x is removed then it will print 21, as it looked for global scoped variable
+
+
+for (var i = 0; i < 5; i++) {
+	setTimeout(function() { console.log(i); } );
+}
+
+WIll print 5 each time as setTimout function will execute after for loop finsihed 
+Closures can be used to prevent this problem by creating a unique scope for each iteration, storing each unique value of the variable within its scope, as follows:
+
+for(var i=0; i< 5; i++) {
+   (function(i){
+     setTimeout(function(){console.log(i);})
+	 })(i)
+}
+
+In an ES2015 context, you can simply use let instead of var in the original code:
+for (let i = 0; i < 5; i++) {
+	setTimeout(function() { console.log(i); }, i * 1000 );
+}
+	 
+   
+   
+****************************
+Closure:::
+Objects are not the only way to produce data privacy. Closures can also be used to create stateful functions whose return values may be influenced by their internal state   
+
+dummy_data_test => dummyDataTest
+
+/***
+ * Print the items in order of number of occurence and equality
+ * For example, for a given list of items i.e. 25, 25, 10, 50, 10, 90, 50, 30, 50,
+ * the output should be
+ * 50 - 3
+ * 25 - 2
+ * 10 - 2
+ * 90 - 1
+ * 30 - 1
+ */
+
+const items = [25, 25, 10, 50, 10, 90, 50, 30, 50];
+var obj = {};
+
+items.forEach((value) => {
+  if(obj[value]) {
+    obj[value] = obj[value] + 1;
+  } else {
+    obj[value] = 1
+  }
+});
+
+var sortable = [];
+for (var vehicle in obj) {
+    sortable.push([vehicle, obj[vehicle]]);
+}
+
+sortable.sort(function(a, b) {
+    if(b[1] === a[1]){
+      return b[0] - a[0]; // if values are same and need to give preferene to keys
+    } else {
+      return  b[1] - a[1];
+    }     
+});
+
+console.log(sortable.toString()); // 50,3,25,2,10,2,90,1,30,1

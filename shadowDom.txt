@@ -1,0 +1,43 @@
+1. Custom css variable pierus through shadow boundaries, use to style web components
+2. slots are use to place any element for customizing web component, element placed inside slots can style from outside
+<style rel="stylesheet">
+  my-component p {
+    background: green;
+  }
+</style>
+Element p is placed inside slot of web component. The reason behind is that these elements are not shadowed in the component but injected with the help of slots.
+3. using ::slotted we are able to style elements we injected in slots
+::slotted(p) {
+  background: blue !important;
+}
+
+4. You can specify a “styleable” part on any element in your shadow tree:, we apply these class from outside of shadow dom
+x-foo::part(some-box):hover { ... }
+but part doesn't style child element
+x-foo::part(some-box) span { ... } nor
+x-foo::part(some-box)::part(some-other-thing) { ... } 
+Above mentioned will not work
+
+5. Use 'exportparts' for styling child or more than one level of shadow dom
+ <submit-form>
+  #shadow-root
+    <x-form exportparts="some-input some-box">
+      #shadow-root
+        <x-bar exportparts="some-input some-box">
+          #shadow-root
+            <x-foo exportparts="some-input some-box"></x-foo>
+        </x-bar>
+    </x-form>
+</submit-form>
+
+Style with 
+:root::part(some-input) { ... }
+
+6. Use ::theme for styling child or more than one level ( In case we don't want to use exportparts)
+x-bar::theme(some-input) { ... }
+
+7. :host element which contain host element 
+:host { color: green; }
+:host(.error) { color: red; }  // Apply only if host element as error class
+:host-context() that can detect if there is an ancestor matching a specified selector outside of the Shadow Tree.
+	

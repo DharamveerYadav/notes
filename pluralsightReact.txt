@@ -1,0 +1,15 @@
+https://jscomplete.com/playground/rgs3.1 -- star game
+https://jscomplete.com/learn/1rd-reactful
+https://github.com/jscomplete/rgs-star-match
+
+https://github.com/AlexBreskin/pluralsight-designing-react-components-course-code
+https://github.com/hendrikswan/pluralsight-react-performance
+
+jaketrent.com/stylingreact
+
+eslint-plugin-react-hook npm package
+
+
+https://www.youtube.com/watch?v=fzxEECHnsvU
+
+https://github.com/safak/youtube2022/tree/react-admin  admin dashbourd page html scss js

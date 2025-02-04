@@ -1,0 +1,155 @@
+1. shallow copy and deep copy
+
+
+*************************************************
+If the HttpOnly flag (optional) is included in the HTTP response header, the cookie cannot be accessed through client side script.
+
+Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into otherwise benign and trusted websites.
+
+// set the cookie to be secure (only accessible over HTTPS)
+document.cookie = "user=John; secure";
+To delete a cookie, we can call it with a negative expiration date:
+
+
+generator is a function which returns an object on which you can call next(). Every invocation of next() will return an object of shape
+{ 
+  value: Any,
+  done: true|false
+} 
+
+function* genFun(){
+  console.log('Line 1');
+  yield 'Hello';
+  console.log('line2');
+  yield 'Hello2';
+};
+
+const genObject = genFun();
+
+console.log(genObject.next().value);
+console.log(genObject.next()); // {value: 'Hello2', done: false}
+
+function * iterableObj() {
+  yield 'This';
+  yield 'is';
+  yield 'iterable.'
+}
+for (const val of iterableObj()) {
+  console.log(val);
+}
+// This
+// is 
+// iterable.
+
+
+
+***********  Mixins, Interface
+There are several well-documented problems with the class-based lifecycle events. One of the biggest complaints is that you often have to repeat logic in componentDidMount and componentDidUpdate.
+
+eslint-plugin-react-hooks
+
+Hook Rules :
+Don’t call Hooks inside loops, conditions, or nested functions
+Only Call Hooks from React Functions
+
+
+Thunk: 
+For handling async operation, accept Action and return Action 
+
+const store = createStore( rootReducer, applyMiddleware(thunk));
+
+function increment(){
+        return {
+		    type: Increment
+			}}
+
+
+function incrementAsync(){
+return dispatch => {
+               setTimout(() => {
+			         dispatch(increment())
+					 })
+				}
+		}		
+				
+
+Hooks should not be place inside condition, loop or inner function as in re-render cycle hook will have different sequence of execution and that cause in weired behavior.
+Hook setState use array for state and the other arrya for setState which hold reference to state. If order mismatch the it will set 
+
+****************************************
+Uncontrolled components Where form field does not bind to value property
+ uncontrolled components, you don’t have to worry about synchronizing data. Your application will always hold on to the most recent changes
+
+const formReducer = (state, event) => {
+  return {
+    ...state,
+     [event.name]: event.value
+  }
+};
+
+const Login =(props) => {
+  const [form, dispatch] = useReducer(formReducer, initialState);
+
+  const  submitHandler = () => {
+           event.preventDefault();        
+       CallApi(form.username, form.country);    
+  }
+
+
+  const  handleChange = (event) => {  
+    const isChecked = event.target.type === 'checked';
+    dispatch({
+      name: event.target.name,
+      value: isChecked ? event.target.checked : event.target.value
+    });
+   
+}
+  return (
+    <form onSubmit={submitHandler}>
+        <h1>Login </h1>
+        <fieldset>
+            <label for="username">UserName</label>
+            <input name="username" onChange={handleChange}/>
+            <label for="country">Country</label>
+            <select name="country" onChange={handleChange}>
+              <option value="">Please select country </option>
+              <option value="india">India </option>
+              <option value="america">America</option>
+              </select>
+            <input type="number" name="steps" step="1" />
+            <input type="checkbox" name="agree" />
+            <button type="submit" >Login </button>  
+          </fieldset>
+      </form>
+  )
+};
+
+export default Login;
+
+A controlled component is similar to an uncontrolled component, but React updates the value prop. The downside is that if you are not careful and do not properly update the value prop the component will appear broken and won’t seem to update.
+
+Just add 
+value={formData.name || ''}
+checked={formData['gift-wrap'] || false}
+
+If reducer needs to handler reset functionality
+const formReducer = (state, event) => {
+  if(event.reset) {
+   return {
+     apple: '',
+     count: 0,
+     name: '',
+     'gift-wrap': false,
+   }
+ }
+  return {
+    ...state,
+    [event.name]: event.value
+  }
+}
+
+If empty object will return, it will not update the value of input comp as value is undefined for each input
+
+Uncontrolled components are best for simplicity, but might not fit situations when a component needs to be cleared or pre-populated with data. Controlled components give you more opportunities to update the data, but can add another level of abstraction that may cause unintentional bugs or re-renders.
+
+*****************************************************************

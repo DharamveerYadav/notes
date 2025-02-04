@@ -1,0 +1,298 @@
+All JavaScript identifiers are case sensitive
+prototype based object oriented language
+Prototypes are the mechanism by which JavaScript objects inherit features from one another.
+JavaScript is often described as a prototype-based language — to provide inheritance, objects can have a prototype object, which acts as a template object that it inherits methods and properties from.
+
+1. closure in javascript => inner function close on property or say lock, if any value pass to outer function and inner function do some async task it will gurantee that it will execute on that value 
+const hello = (event) => {
+
+   innerFunction(){
+   using event here, then this function lock in with the current value of event and will gurantee of execution with the current value
+   }
+   
+   
+}
+Inner function has alwasys access to the variable environement of the execution context in which it was created.
+ closures are the primary mechanism used to enable data privacy.
+ Closure can be used to create statefull function 
+ var create shared laxical environment but let create block scoped variable
+ 
+ function Test(privateText) {
+    const testchar = privateText
+    return {
+        privateVar: function() {
+            return hidden
+        }
+    }
+}
+
+const test = Test("I am private");
+
+test.testchar 
+test.privateVar()
+
+2. What is context in javascript, how to change context, what method is used ( using apply and call)
+3. what is Grunt, Gulp and webpack 
+4. What is Jamine, Mocha and karma
+5. What is callback function
+6. Callback function is async or sync function 
+7. What problem does promises solve
+8 What is transfiling in Angular , convert the typescript into javascript. We can do this by using Traceur
+9 Different ways of data binding in Angular
+10 which life cycle called first 
+11 Module for ngModuleDirective Com module
+12. Directive for content projection
+13 If service privided in two component, how many time instance would be created for that service ( check for 2)
+14 Different approches for handling form in Angular -- Template driven and reactive driven 
+15. How to lazy module in angular --- using loadchildren: () => import('module path).then(m => m.${Module_name})
+16. Route guards for authentication -- canActivate and canActivateChild
+Difference between canLoad and canActivate => canLoad guard check condition before loading lazy loaded modules and return false, will not the module 
+but canActive first load the module and then check the condition if return false will not redirect to new url
+17 Subject and behavioural subject
+18 Different change detection stretagy 
+change detection strategy will kicks in when:
+The Input reference changes;
+An event originated from the component or one of its children;
+Run change detection explicitly (componentRef.markForCheck());
+Use the async pipe in the view.
+19 Html5 features and Api have you used
+20. genrator function in javascript
+21. Pseduo element and classess 
+22 Css speceficity 
+23. CSS framework used like bootstrap
+24. CSS preprocessure
+25. What is data attribute in css, where do we store data
+26. How do we achive responsive behaviour 
+27 what are the breakpoint for responsive behaviour 
+28 Responsive grid system
+29 Responsive foreground image, how to handle
+30 what is accessbility 
+31. Approach for responsive development
+32. What is area tag in html
+33. Two principle of solid programming
+[S]ingle Responsibility Principle
+[O]pen/Closed Principle
+[L]iskov Substitution Principle
+[I]nterface Segregation Principle
+[D]ependency Inversion Principle
+34. What is DRY principle
+35 What is difference null vs undefined 
+36 Cros side request freq vs CORS
+37. What is frontend solution, architure consideratioin for designg a solution 
+38 How to measure the performance of any site
+39.tool for testing qualality of css
+40.  way of reducing http request , lazy loading, for image sprite images
+41. Javascript added in body tag does it will have any effect on page rendering and removing the effect we use async programming or defer 
+42. Design pattern in javascript like Singaton, facade, modular
+43. temporal dead zone
+44. Tree shaking means removing unused code 
+45. Difference between enum iterator and iterator
+46. Difference between obserable and Subject, what is obserable
+47. what is javascript and typescript
+48. Traceur compiler takes classes, generators, and other features from ECMAScript edition 6 (ES6) and compiles it into JavaScript ES5 that runs on the browser.
+49.  using href was reloading the entire app component (header, content , footer) which shouldn’t happen. After changing href to routerLink for navigation, 
+50. Prototype is a special object meant to hold shared attributes & behaviors of instances, prototype is an object, which contains common functionalities that javaScript object inherits.   
+51. Pure and impure pipe  ( pure pipe (default) is based on pure function and will create only one instance but impure pipe is based on impure function( which keep internal state) and will create new instance every time like Async pipe
+52. Destructuring in javaScript
+53. different base url in angular.json
+54. customize structure directives 
+55. Interceptors in Angular
+56. How to declare private in javascript
+57. Different type of function in Javascript
+58. If Parent comp is on OnPush, then what would be stretagy for child comp
+59. What is hoisting in javaScript
+60. ARIA can modify existing element semantics or add semantics to elements where no native semantics exist. It can also express semantic patterns that don't exist at all in HTML, like a menu or a tab panel. like area-label which is only visible to assistive tools. other examples area-controls, area-checked
+61. Angular app performance improvement
+  A. code-splitting
+  B. Preloading strategies
+  C. Performance budgets
+  D. Efficient serving
+  
+62. server side rendering 
+main.server.ts -- exporting appservermodule
+appservermodule -- importing server module from @angular/platform-server 
+also importing appmodule
+ngExpressEngine --> renderModule() takes as input HTML page usually index.html
+
+Angular specefic::
+Angular lifecycle hooks
+1. ngOnChange
+2. ngOnInit
+3. ngDoCheck
+4. ngAfterContentInit
+5. ngAfterContentChecked
+6. ngAfterViewInit
+7. ngAfterViewChecked
+8. ngOnDestroy
+  
+2) Renderer2 is imported from angular/core used for interacting dom element or as in a elagant way  
+3) ViewChild element can be access in ngAfterViewInit life cycle hook and call ChangeDetectorRef manually to reflect updated properties
+3) If i want select an element in projected content(<ng-content></ng-content>) then use @ContentChild and access this element in ngAfterContentInit life cycle hook
+4) There are four types of directives in Angular,
+Components directives
+Structural directives The structural directive is used to add or remove the HTML Element in the Dom Layout *NgIf,*NgFor,*NgSwitch
+Attribute directives  Attribute directive is used to change/modify the behavior of the HTML element in the Dom Layout like NgClass, NgStyle
+Custom Directive
+It is vulnerable to XSS attacks when we directly use ElementRef in our application. It is better to create a custom directive and use ElementRef inside directive to change appearance or behavior of the host element.
+
+5) @HostBinding and @HostListener are two decorators in Angular that can be really useful in custom directives. @HostBinding lets you set properties on the element or component that hosts the directive, and @HostListener lets you listen for events on the host element or component.
+
+6)<ng-container>  the inability to use multiple structural directives on a single host element in Angular
+7)<ng-template> used with structural directive, will wrap into ng-template and replace with diagnostic comments 
+
+
+From Sapient:
+
+1. How to right mobile first developement
+2. Basic understand of webpack`
+3. User case of generatro functions
+4. pure/ impure function
+5. closure function application
+6. why to use scss 
+7. advantage of async/ await over promises
+8. Solid design pattern
+9. How implement accessbility
+10. function getData(){
+	console.log(this)
+}
+getData();
+
+11. difference between bootstrap3 and 4
+12. how does media query work
+13. Difference between context and scope
+14. Why to write interfaces 
+15. how to clear localStorage
+16. What is atom programming
+17. Example of mixin
+18. Best practices to load images 
+19. For code quality apart from EsLint
+20. 
+
+
+Design pattern, solid principle, 12 factor security and performance a, aa, aaa accessbility guidelines 
+
+ // CORS headers
+      res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+      res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Content-type,Accept,X-Access-Token,X-Key,authorization,lazyupdate,headers,lazyinit,normalizednames"
+      );
+	  
+	  
+****************************EY
+var name = {
+    firstName: 'dharmveer',
+	yadav = 'yadav'
+}	  
+
+Remove firstName from the object
+delete name.firstName;
+
+group by in javascript :
+Most efficient group by is done with the help of reduce function:::
+array.reduce((pre, x) => {
+pre[x.length] = x
+}, {});
+Interceptor :: if refreshing the token what will to upcoming request
+mapset, shift method of array
+The shift() method removes the first item of an array.
+To remove the last item of an array, use the pop() method.
+The unshift() method adds new items to the beginning of an array, and returns the new length.
+To add new items at the end of an array, use the push() method.
+
+use reduce method in array
+difference between observer and promises
+Treeshaking 
+flat an array of javascript flat() method creates a new array with all sub-array elements concatenated into it recursively up to the specified depth.
+const arr1 = [0, 1, 2, [3, 4]];
+console.log(arr1.flat());
+// expected output: [0, 1, 2, 3, 4]
+declare global variable inside function
+
+Prevents accidental globals. Without strict mode, assigning a value to an undeclared variable automatically creates a global variable with that name. This is one of the most common errors in JavaScript. In strict mode, attempting to do so throws an error.
+
+typeof null is object and it is primitive type, converted to zero in primitive operation on the other hand undefined means variable is not initialized and convert to NaN while performing primitive type operation
+
+Below are the list of some new features of ES6,
+
+Support for constants or immutable variables
+Block-scope support for variables, constants and functions
+Arrow functions
+Default parameters
+Rest and Spread Parameters
+Template Literals
+Multi-line Strings
+Destructuring Assignment
+Enhanced Object Literals
+Promises
+Classes
+Modules
+
+
+An Observable is basically a function that can return a stream of values either synchronously or asynchronously to an observer over time. The consumer can get the value by calling subscribe() method. Let's look at a simple example of an Observable
+
+*******************************
+ Observables are lazy in the sense that they only execute values when something subscribes to it. For each subscriber the Observable starts a new execution, resulting in the fact that the data is not shared.
+ An Observable is cold when data is produced inside the Observable and the Observable is hot when the data is produced outside the Observable. As we just saw the hot Observable is able to share data between multiple subscribers. We call this behaviour “multicasting”.
+const subject  = Rxjs.Subject();
+then can emit values like subject.next();
+subject is mulitcast (Obserable is unicast) data stream but each subscriber will execute with different Subject object, execution will be isolate from each other
+
+BehaviorSubject keep the last value or we can initialized with value
+ReplaySubject can record history value 
+AsyncSubject will emit last value when subject get complete
+
+const simpleObservable = new Observable((observer) => {
+    
+    // observable execution
+    observer.next("bla bla bla")
+    observer.complete()
+})
+// subscribe to the observable
+simpleObservable.subscribe()
+
+// dispose the observable
+simpleObservable.unsubscribe()
+
+
+Zip :  Both values must change then only the log gets triggered.
+combineLatest: wait for the first value from all, then it will trigger for all the values
+withLatestFrom: At first (only once), color(master) will look for logo(slave). Once the logo(slave) has responded, color(master) will take the lead. Log will get triggered whenever the next color(master) value is changed. The logo(slave) value changes will not trigger the console log.
+forkJoin( kind of Promise.all): They are very serious to make sure each other are their final destination. In our code, both color and logo observables are not complete,We need to complete both observables.
+
+
+
+import { of, from } from 'rxjs'; 
+import { map, delay, concatMap, mergeMap } from 'rxjs/operators';
+
+const getData = (param) => {
+  return of(`retrieved new data with param ${param}`).pipe(
+    delay(Math.random() * 1000)
+  )
+}
+// using mergeMap
+from([1, 2, 3 ,4]).pipe(
+  mergeMap(param => getData(param))
+).subscribe(val => console.log('mergeMap:', val));
+
+ Use mergeMap if you simply want to flatten the data into one Observable, use switchMap if you need to flatten the data into one Observable but only need the latest value and use concatMap if you need to flatten the data into one Observable and the order is important to you.
+ 
+ MergeMap: execute for all outer values, sequence is not guranteed
+ switchMap: will discard or previos subsription and will execute for last one 
+ concatMap: execute for all outer values and sequence is guranteed
+ ExhaustMap always waits for the inner observable to finish. It ignores any value it receives from the source during this period.
+ 
+ 
+ Guards in Angular:
+CanActivate : To implementing route guard preventing access to the specific route we use CanActivate interface.
+canActivate(route:ActivatedRouteSnapshot, state:RouterStateSnapshot):Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+
+CanActivateChild CanActivateChild is used to prevent access to child routes of a given route, so by using this you don’t need to add canActive on each child route
+
+CanLoad
+CanDeactivate
+Resolve
+
+
+The Angular components and templates cannot be understood by the browser directly. Due to that Angular applications require a compilation process before they can run in a browser. For example, In AOT compilation, both Angular HTML and TypeScript code converted into efficient JavaScript code during the build phase before browser runs it.

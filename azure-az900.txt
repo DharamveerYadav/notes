@@ -1,0 +1,216 @@
+1. All virtual network subnet should use network security group
+SLAs
+virtual machine
+2 availability zone in different region 99.99
+availability zone in same region 99.95
+for single vm 99.9
+Active Directory, Premium 99.9
+  No SLA is provided for the Free tier of Azure Active Directory but basic plan comes with an SLA of at least 99.9 %
+Azure sql database base tier 99.99
+Azure storage LRS storage reads 99.9
+
+
+What type of documents does the Microsoft Service Trust Portal provide?
+Which of the following elements is considered part of the "perimeter" layer of security?
+Within the context of privacy and compliance, what does the acronym ISO stand for, in English?
+What two types of DDoS protection services does Azure provide? Select two.
+What feature of a system makes it elastic?
+Which Azure AD licenses (select two) are made available through Azure?
+True or false: Azure Cloud Shell allows access to the CLI and Powershell consoles in the Azure Portal
+What operating systems does Microsoft supply Azure Virtual Machine images for?
+What is the benefit of economies of scale?
+What is a DDoS attack?
+Azure government, GDPR, ISO, NIST
+Azure Government--> A dedicated public cloud for federal and state agencies in the United States.
+GDPR--> An European policy that regulates data privacy and data protection.
+ISO-->An organization that defines international standards across all industries
+NIST -->An organization that defines standards used by the United States government
+Disaster recovery --> A cloud service that can be recovered after it occurs.
+
+Fault tolerance--> A cloud service that remains available after it occurs.
+Low latency--> A cloud service that can be accessed quickly to the internet
+Dynamic scalability--> A cloud service that performs quickly when it increases.
+different CLI for different operating system
+Where can you obtain details about the personal data Microsoft processes , how Microsoft processes it , and for what purpose ?
+It is stated in the document that  if the 'monthly uptime percentage' is below 99,9% you get a 10% discount for the services that are affected, similarly if it is under 99% you get a 25% discount etc.
+You can use Budget alert  in Azure to send email alerts when the cost of the current billing period for an Azure subscription exceeds a specified limit.
+ AIP : Azure Information Protection (sometimes referred to as AIP) is a cloud-based solution that helps an organization to classify and optionally, protect its documents and emails by applying labels. Labels can be applied automatically by administrators who define rules and conditions, manually by users, or a combination where users are given recommendations.
+ 
+ DDoS Protection Standard protects resources in a virtual network including public IP addresses associated with virtual machines, load balancers, and application gateways. It is not for access management.
+ 
+ Azure Traffic Manager is a DNS-based traffic load balancer that enables you to distribute traffic optimally to services across global Azure regions, while providing high availability and responsiveness.
+ 
+ 
+ As per MS documentation - "The Azure CLI is available to install in Windows, macOS and Linux environments. It can also be run in a Docker container and Azure Cloud Shell "
+As per MS documentation - "The Azure portal is a web-based console and runs in the browser of all modern desktops and tablet devices. If you need to manage Azure resources from a mobile device, try the Azure mobile app. It's available for iOS and Android".
+As per MS documentation - "Azure PowerShell works with PowerShell 5.1 on Windows, and PowerShell 6.x and higher on all platforms"
+
+
+Microsoft Privacy Statement : This privacy statement explains the personal data Microsoft processes, how Microsoft processes it and for what purposes.
+
+Compliance Manager : Compliance Manager is a workflow-based risk assessment tool that helps you track, assign, and verify your organization's regulatory compliance activities related to Microsoft Cloud services, such as Office 365, Dynamics 365, and Azure. Use Compliance Manager to manage regulatory compliance within the shared responsibility model of the cloud. Hence this is wrong choice.
+Azure Service Health : Microsoft Azure Service Health is your personalized dashboard in the Azure portal for receiving notifications, guidance, and technical support when Azure service issues, updates, or planned maintenance affect your Azure resources.
+Trust Center : It deals four foundational principles of trust: security, privacy, compliance, and transparency in the cloud.
+
+
+These effects are currently supported in a policy definition:
+
+Append
+Audit
+AuditIfNotExists
+Deny
+DeployIfNotExists
+Disabled
+EnforceOPAConstraint (preview)
+EnforceRegoPolicy (preview)
+Modify
+
+
+This would fulfill the requirement. Azure Blueprints enables cloud architects and central information technology groups to define a repeatable set of Azure resources that implements and adheres to an organization's standards, patterns, and requirements. Azure Blueprints makes it possible for development teams to rapidly build and stand up new environments.Blueprints are a declarative way to orchestrate the deployment of various resource templates and other artifacts
+
+type of azure function"
+Time, blob, event grid, http
+
+ Hence scale sets are used for scalling. So the scale sets can not be used for high availability if a single data center fails. 
+ 
+ Availability Zones is a high-availability offering that protects your applications and data from datacenter failures. Availability Zones are unique physical locations within an Azure region. Each zone is made up of one or more datacenters equipped with independent power, cooling, and networking.
+ 
+ PCI DSS : compliant with Payment Card Industry (PCI) Data Security Standards (DSS). Designed to prevent fraud, PCI DSS is a global information security standard for protecting payment and cardholder data.
+
+
+Azure advisor provide details of :,
+Reliability ( Formally know as High availability)
+Security, Performance, Cost, Operational excellence
+
+SLA for active directory 
+99.9 for premium and basic, no SLA for free tier
+
+Azure Traffic Manager is a DNS-based traffic load balancer that enables you to distribute traffic optimally to services across global Azure regions, while providing high availability and responsiveness.
+
+
+
+Power Apps makers can now create a powerful new type of experience: external-facing websites that allow users outside their organizations to sign in with a wide variety of identities, create and view data in Common Data Service, or even browse content anonymously. 
+
+ A keyword is 'must be' otherwise there is separate portal for Preview http://preview.portal.azure.com/ . It can be accessed via azure portal as well.
+ 
+ Enterprise Agreement (EA) customers can purchase Azure Standard, ProDirect and Premier technical support through their Reseller. Developer Support is not available through an Enterprise Agreement.You don't need the enterprise agreement to get a premier support plan.
+ MSDN is a free support plan and has no linkage with the subscription.
+ 
+ Every subscription is allowed to create up to 50 Virtual Networks across all regions. There is no additional charge of multiple network interfaces ( NICs )
+ 
+  These public IP addresses come with a nominal charge. If you do not plan to use them, deleting them can result in cost savings.
+  
+  Azure Active Directory comes in four editions generally—Free, Office 365 apps edition, Premium P1, and Premium P2. The Free edition is included with an Azure subscription. The P1 and P2 comes with unlimited object limit.
+  
+  Yes , The virtual machines can be moved to the new subscription
+  
+   Azure DevTest Labs makes it easy to provide Virtual Machine Images that you can reuse within your team for development and testing. It also enables you to manage costs by setting things like: Maximum number of VMs per lab and per user. It Quickly provision Windows and Linux environments by using reusable templates and artifacts.
+   
+   The Basic support plan does not have any technical support for engineers.
+The Developer support plan has only technical support for engineers via email.
+The Standard, Professional Direct, and Premier support plans have technical support for engineers via email and phone.
+
+What should you use to evaluate whether your company’s Azure environment meets regulatory  ----- Regulatory compliance in security center blade
+
+Compliance Manager is a workflow-based risk assessment dashboard within the Service Trust Portal that enables you to track, assign, and verify your organization's regulatory compliance activities 
+
+Network security group used for single Virtual network
+
+If we apply any permissions at resource group level then it will inherit all the permissions to  all the resources residing in that resource group.
+
+
+Virtual machine two or more instance deployed in two or more availability zone in same region SLA -- 99.99
+virtual machine two or more instance deployed in same availability set SLA -- 99.95
+Single instance VM using premium SSD -- 99.9
+Single instance VM using standard SSD -- 99.5
+Single instance VM using standard HDD -- 95
+
+Only one account administrator per subscription is allowed 
+Resource Groups do NOT span over multiple Subscriptions. 
+
+Community clouds are often designed for businesses and organizations working on joint projects, applications, or research, which requires a central cloud computing facility for building, managing and executing such projects, regardless of the solution rented.
+
+Bring your own license (BYOL)
+
+ Microsoft Azure Service Health is your personalized dashboard in the Azure portal for receiving notifications, guidance, and technical support when Azure service issues, updates, or planned maintenance affect your Azure resources.
+ 
+ Azure security center has two tier basic and standard
+ 
+ Azure Time Series Insights Preview is an end-to-end platform-as-a-service (PaaS) offering. You can use it to collect, process, store, analyze, and query data at Internet of Things (IoT)
+ 
+ Data transfer pricing is based on the Zones. 
+ Azure Active Directory is a Platform as a Service that provides single sign-on and multi-factor authentication.
+ Azure Active Directory provides the following licenses: Free, "Pay as you go", Premium P1, and Premium P2.
+ Ingress bandwidth is free. You pay for egress (outbound).
+ What operating systems does Microsoft supply Azure Virtual Machine images for? Windows and Linux not for MacOS
+ 
+ Microsoft Privacy Statement : This privacy statement explains the personal data Microsoft processes, how Microsoft processes it and for what purposes. 
+ Compliance Manager : Compliance Manager is a workflow-based risk assessment tool that helps you track, assign, and verify your organization's regulatory compliance activities related to Microsoft Cloud services, such as Office 365, Dynamics 365, and Azure. Use Compliance Manager to manage regulatory compliance within the shared responsibility model of the cloud.
+  Azure Service Health : Microsoft Azure Service Health is your personalized dashboard in the Azure portal for receiving notifications, guidance, and technical support when Azure service issues, updates, or planned maintenance affect your Azure resources.
+  Trust Center : It deals four foundational principles of trust: security, privacy, compliance, and transparency in the cloud.
+  
+  PowerApps Portals allow organizations to create websites which can be shared with users external to their organization either anonymously or through the login provider of their choice like LinkedIn, Microsoft Account, other commercial login providers.
+  
+  Agility - the ability to respond to change “rapidly” based on changes to market or environment; ensuring fast time to market
+  Compliance Manager will track your own compliance with various standards and laws.
+  if  Azure environment meets regulatory requirements then Security center blade from Azure portal
+  Up to 1000 virtual machines can be managed under a single VMSS
+  A VPN Gateway needs to be configured to connect to Azure for a private network to be established
+  
+  There are now 2 regions in Brazil.
+  There is not a limit to the number of subscriptions a single user can be included on.
+  There are 54 Azure regions currently, in 10 geographies
+  Yes, Azure Tenant is a dedicated and trusted instance of Azure AD that's automatically created when your organization signs up for a Microsoft cloud service subscription.
+  Application gateway can make load balancing decisions based on the URL path, while a load balancer can't.
+  Each Azure free account includes 750 hours free for Azure B1S General Purpose Virtual Machines for the first 12 months.
+  Azure's only Middle Eastern data centers are located in UAE
+  Infrastructure as a service is the easiest to migrate into, from an existing hosted app - lift and shift
+  
+  Azure AD plan:
+  Free , office 365 Apps, Premium p1, premium p2
+  
+  Azure plans
+  Basic, Developer, Standard, professional direct, premier
+  
+  Outbound data transfer is charged at the normal rate and inbound data transfer is free. The pricing rule that you should keep in mind is this: outbound traffic (leaving Azure cloud or an Azure region) is NOT free, inbound traffic is free
+  When you apply a lock at a parent scope, all resources within that scope inherit the same lock. Even resources you add later inherit the lock from the parent.
+  
+  An Azure AD tenant can have multiple subscriptions but an Azure subscription can only be associated with one Azure AD tenant.
+  Azure App Service is a PaaS (Platform as a Service) service. However, Azure Storage accounts are an IaaS (Infrastructure as a Service) service
+  
+  Iaas : servers and storage, networking, firewall/ security, datacenter/ physical plant
+  Paas : Development tool, database management, business analystics, operating systems
+  Saas : Hosted application/ apps
+  
+  Azure Site Recovery provides fault tolerance for virtual machines.
+  Azure Databricks is an Apache Spark-based analytics platform optimized for the Microsoft Azure cloud services platform.
+  Azure AD join only applies to Windows 10 devices.
+  
+  A PaaS solution that hosts web apps in Azure does provide the ability to scale the platform automatically. This is known as autoscaling.
+  Scale up : increase power of vm or vertical scalling
+  scale out: increase number of vm or horizontal scalling
+  
+  Azure virtual machines provide hardware virtualization.
+  Azure Information Protection is used to automatically add a watermark to Microsoft Word documents that contain credit card information.
+  
+  You can't merge two subscriptions into a single subscription. However, you can move some Azure resources from one subscription to another or you can also transfer ownership of a subscription and change the billing type for a subscription.
+  
+ Azure advisor security recommendations include restricting access to virtual machines by configuring Network Security Groups, enabling storage encryption, installing vulnerability assessment solutions. However, Azure Advisor does not provide recommendations on how to improve the security of an Azure AD environment.
+ Azure Advisor does not provide recommendations on how to configure network settings on Azure virtual machines
+ 
+ You can restrict traffic to multiple virtual networks in multiple subscriptions with a single Azure firewall.
+ Azure Monitor cannot monitor resources in multiple subscriptions
+ 
+ The statement is false, there is no upload limit attached to Azure free accounts. An Azure free account has a 5 GB blob storage limit and a 5 GB file storage limit for the first 12 months.
+ Azure free account has a limit of 10 web, mobile or API apps.
+ 
+ Tags for Resources are not inherited by default from their Resource Group.Azure resources inherit the permissions configured at the resource group level
+ 
+ There are two storage services IoT Hub can route messages to -- Azure Blob Storage and Azure Data Lake Storage Gen2 (ADLS Gen2) accounts. 
+ 
+ A Local Network Gateway is an object in Azure that represents your on-premise VPN device. A Virtual Network Gateway is the VPN object at the Azure end of the VPN.
+ 
+ As availability zones are part of the same Azure region, they are used to replicate data and appflications in the same region, to multiple data centers, and not to multiple different regions.
+ Multiple subscriptions can trust the same Azure AD directory. Each subscription can only trust a single directory.
+ With the Azure Web App service, you can change the pricing tier to get more memory for the underlying applications.
+ Group policies are not available in Azure Active Directory

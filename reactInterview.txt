@@ -1,0 +1,304 @@
+@Todo
+1. writing Unit Testcase
+2. Secrity needs to consider for front end developer 
+3. Forms/ Formik libary
+4. Constant and environment files 
+5. API response handling in Objects/ Maps
+6. Error boundaries
+7. if redirectied before api call get finished 
+8. what will happen we call api in redux without thunk
+9. React fiber
+10. next-optimized-images   https://github.com/cyrilwanner/next-optimized-images
+
+
+
+
+
+
+*******************************************************************
+componentWillMount: Executed before rendering and is used for App level configuration in your root component.
+componentDidMount: Executed after first rendering and here all AJAX requests, DOM or state updates, and set up eventListeners should occur.
+componentWillReceiveProps: Executed when particular prop updates to trigger state transitions.
+shouldComponentUpdate: Determines if the component will be updated or not. By default it returns true. If you are sure that the component doesn't need to render after state or props are updated, you can return false value. It is a great place to improve performance as it allows you to prevent a rerender if component receives new prop.
+componentWillUpdate: Executed before re-rendering the component when there are pros & state changes confirmed by shouldComponentUpdate which returns true.
+componentDidUpdate: Mostly it is used to update the DOM in response to prop or state changes.
+componentWillUnmount: It will be used to cancel any outgoing network requests, or remove all event listeners associated with the component.
+
+2. React Router is a routing library built on top of React, which is used to create routes in a React application. 
+<BrowserRouter>
+<div>
+<Route Path="/" component={App} />
+<Route Path="/about" component={About} />
+</div>
+</BrowserRouter>
+
+3. When building a React application, there is often the need for a deeply nested component to use data provided by another component that is much higher in the hierarchy. The simplest approach is to simply pass a prop from each component to the next in the hierarchy from the source component to the deeply nested component. This is called prop drilling
+To avoid prop drilling, a common approach is to use React context. This allows a Provider component that supplies data to be defined, and allows nested components to consume context data via either a Consumer component or a useContext hook.
+
+
+
+**************************************************
+Questions from Training
+
+1. tool for creating app create-react-aap
+2. props passed from outside though state manage from inside
+3. react.createElement in which jsx code convert use react imported at the top of files
+4. hooks released in react 16.8 
+5. SetState merge the state with the old one ( patch the state). useState hook simply replace while setting new state
+6. Methods reference also be passed throgh props 
+7. Radium allows inline style with pseudo selectors and media queries
+8. Other libraries => styleComponents, 
+9. react developer tool for debugging
+10. Errorhandling comp is example of HOC and use componentDidCatch life cycle
+
+Life cycle hooks
+construct Comp : 
+1. Constructor : initiaze state here, call super(props)
+2. state getDerivedStateFromProps : if state need to be update based on props, return state
+3. Render => all child life cycle hooks
+4. ComponentDidMount => call side effect here
+
+Update comp : 
+1. static getDerivedStateFromProps
+2. shouldComponentUpdate(nextprops, nextState) => before updating comp, return true, false => props and state changes update comp
+used for performance optimization , In functional comp me can use React.Memo(comp) is great way for optimization it will not re render the comp if props did not change 
+If checking all the props inside shouldComponentUpdate then use PureComponent instead of Component ( will do the same)
+3. getSnapshotBeforeUpdate(prevProps, prevState) => return null, just a minute before updating dom ( save previous state)
+4. componentDidUpdate
+
+one Render method is called => React compare old virtual dom to new virtual dom, if it found difference will change in real dom, will not entirly load new DOM
+
+Build in Aux comp ( Empty comp or wrapper) React.Fragment
+
+PropTypes for validating props, types: func, string, number
+
+Ref, for creating reference for any element in the comp ref={(inputRef) => {inputRef.focus()} -- direct access
+useRef hook for functional comp
+
+For avoiding passing props to multiple comp use React.createContext , add provider and consumers ( can only be use in jsx) if want to use in lifecycle hooks or in javascript code react 16.6 added 
+static contextType = AuthContext;
+and use this.context.userAuthenticated ( name should not be change)
+For functional comp use 'useContext' hook
+const authContext = useContext(AuthContext);
+
+const AuthContext = React.createContext({user: true});
+<AuthContext.Provider value={{user: true}}>
+<Home />
+</AuthContext.Provider>
+
+use axios library for http call ( javascript library not react specefic)
+Interceptor applied in index.js axios.interceptor.request.use(request => { console.log(request); return request ;});
+setting default url : axios.default.baseURL = 
+
+Router : 
+We installed both react-router  and react-router-dom . Technically, only react-router-dom  is required for web development. It wraps react-router  and therefore uses it as a dependency.
+react-router contain logic ( don't require to install)
+react-router-dom for rendering 
+wrap everything browserRouter from react-router-dom 
+then provide Routes using Route tag, with properties path="/" exact render="return jsx" or component="{comp}
+use Link, NavLink tag instead of anchor tag, for avoiding reloading
+props added, history, location and match ( will have only to those comp which loaded through router, child comp will not have access to route props)
+query param would be find under props.match.params
+withRouter HOC to inject these props of nearest loaded router
+
+Different router uses :
+this.props.history.push() ==> push new page on top of current
+this.props.history.goBack() ==> back to the parent one
+this.props.history.push({
+  pathname: '/checkout',
+  search: 'queryparam'  
+})
+
+
+Lazy loading:
+Before 16.6 AsyncComp a HOC component need to create which load components dynamically
+After 16.6 
+const Post = React.lazy(() => import('path'));
+In router
+instead of component use render= { () => ( <Suspense fallback="{<div>Loading..</div>}"><Post /></Suspense> )}
+
+Redux for maintaining state globally
+redux-react and redux libraries
+use connect()() hoc to connect with redux 
+
+Setup : In App.js
+<Provider store={store}> <BrowserRouter>App </BrowserRouter> </Provider>
+
+Variables created in comp:
+const mapStateToProps = (state) =>  {
+return {
+    ing: state.ingredients
+	}
+	}
+const mapDispatchToProps = dispatch => {
+return {
+   onClickHandler : dispatch(actionType.ClickHandler)
+}
+}   
+
+use redux-thunk for handling async operation in action ( Redux can handle only sync operation)
+is a function whitch take action and getState as param and return action 
+async code is written inside actionCreator 
+return promise difficult to test
+
+use redux-saga, for handling async operation
+To keep async code seperate from action creators create saga ( handle side effects ).
+Saga use generator functions and return action ( Use put method for the same)
+return javascript object easy to test
+
+event.preventDefault() --- for preventing reloading of the page
+
+Deploy steps: 
+1. set basepath 
+2. optimize build by running npm run build in create-react-app project 
+3. server must always serve index.html ( also for 404)
+4. upload build artifact to server
+
+Testing::
+use jest as test runner and 'enzyme' as test utility library 
+describe("suite name", () => {
+it("test details",  () => {
+const wrapper = shallow(<importedComp />);
+expect( wrapper.find(importedComp)toHaveLength(2)
+})
+
+})
+
+here shallow method from enzyme and create imported element only don't load whole react app
+
+Major features of React are listed below:
+
+It uses the virtual DOM instead of the real DOM.
+It uses server-side rendering.
+It follows uni-directional data flow or data binding.
+
+There are three different phases of React component’s lifecycle:
+
+Initial Rendering Phase: This is the phase when the component is about to start its life journey and make its way to the DOM.
+Updating Phase: Once the component gets added to the DOM, it can potentially update and re-render only when a prop or state change occurs. That happens only in this phase.
+Unmounting Phase: This is the final phase of a component’s life cycle in which the component is destroyed and removed from the DOM.44
+
+
+
+handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+}
+
+
+
+ 
+render() {
+    return (        
+         
+<form onSubmit={this.handleSubmit}>
+            <label>
+                Name:
+                <input type="text" value={this.state.value} onChange={this.handleSubmit} />
+            </label>
+            <input type="submit" value="Submit" />
+        </form>
+ 
+    );
+}
+
+
+
+1. setState callback method, if syn need to perform operation
+2. state lifting,
+cosuin comp do not share states so will lift the state of both component and will place near or inside parent comp
+ controlled and uncontrolled comp
+In a controlled component, form data is handled by a React component. The alternative is uncontrolled components, where form data is handled by the DOM itself.
+Controlled use state property and controlled use ref property 
+
+
+this.state.message = 'dont update state like this';
+Updating the state in this way will not cause a re-render of the component and the changes made by the user will not be displayed in the UI.
+
+=> @Material-ui libary for customized react components
+
+
+
++++++++++++++++++++++Hooks
+React.memo (HOC comp) => let only update comp if props changed not every time when parent comp update 
+Hooks only allow in function comp and at the root level. inside if loops. for loops its not allowed 
+useEffect hook work as componentDidMount when second parameter passed as '[]' it will run only once after component get created
+other wise it will work as componentDidUpdate if nothing is passed as second parameter, it will run after every render cycle
+
+UseCallback hook wrap a function and cache it so if component re render then that cached function will not created newly and if child components useEffect has dependency on that function that will not be impected 
+
+Closure
+useEffect(() => {
+setTimeout(() => {
+console.log(setValue);
+},500)
+
+});
+
+Inner function will setValue of 500ms ago, it will locked in with previos value, will not have current value of setValue. 
+
+cleanUp function for UseEffect::
+useEffect return return a function as clean up function and run just before next useEffect run ( not in current render cycle) 
+If it has '[]' dependency (i.k.a it will run only once) then clean up function will run when component get umount 
+
+useEffect(() => {
+return () => {
+cleanup area
+}
+}
+)
+
+
+All state update from one and the same Syncronous event handler are batched together.
+in same method id multiple setState are there then it will not fire render cycle for each, it will batched all and update after function has finished
+console.log(name); // prints name state, e.g. 'Manu'
+setName('Max');
+console.log(name); // ??? what gets printed? 'Max'?
+It will not print Max here, new state value is only available in the next component render cycle
+
+UseReducer is alternative to useState to have cleaner code or state is dependent on prevState or state manangement is getting complex
+
+create reducer function like 
+const reducer = (state, action) => {
+  switch(action.type){
+  case 'ADD':
+  return updated State;
+  case 'UPDATE':
+  return updated state;
+  default:
+  throw new Error('type of action is not handled');
+}
+
+const [state, dispatch] = useReducer(reducer, initialState);
+We can give give whatever name we want, like state to ingredient etc.
+
+
+UseCallback for memomizing a function
+useMemo for memomizing a value 
+React.Memo for memoizing a component
+useLayoutEffect
+This runs synchronously immediately after React has performed all DOM mutdations. This can be useful if you need to make DOM measurements (like getting the scroll position or other styles for an element) and then make DOM mutations or trigger a synchronous re-render by updating state.
+
+these tools allow elements to animate when they are rendering and removing 
+Animation :::
+React transitions group 
+React motion 
+react move
+react router transitions
+react lottie for body movin
+
+
+
+
+.env variables should start REACT_APP_
+if want to use .evn for different environment file, create files like 
+.env.dev, .env.prod and install 'env-cmd' library 
+In package.json 
+"start": "env-cmd -f .env.prod react-scripts start"
+
+React 16 however, a kind of try-catch for components is introduced as Error Boundaries to take care of this problem allowing you catch these errors before they get to the internals of the React application.
+An Error Boundary in React is therefore defined as a Class Component that defines one or both of static getDerivedStateFromError() or componentDidCatch()lifecycle methods. The first one, static getDerivedStateFromError() is used to render a fallback user interface after an error has been thrown and the second one, componentDidCatch() is used to log error information to an error tracking service say Sentry
+
+Only class components can be error boundaries. 
+
+Fiber is the new reconciliation engine or reimplementation of core algorithm in React v16. The goal of React Fiber is to increase its suitability for areas like animation, layout, gestures, ability to pause, abort, or reuse work and assign priority to different types of updates; and new concurrency primitives.+
