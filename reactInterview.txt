@@ -6,6 +6,7 @@
 5. API response handling in Objects/ Maps
 6. Error boundaries
 7. if redirectied before api call get finished 
+If you redirect before the request completes, it will be cancelled on the client side. meaning, the server may have gotten the post and acted on it, but you will not get the results.
 8. what will happen we call api in redux without thunk
 9. React fiber
 10. next-optimized-images   https://github.com/cyrilwanner/next-optimized-images
