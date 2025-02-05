@@ -66,6 +66,19 @@ Run change detection explicitly (componentRef.markForCheck());
 Use the async pipe in the view.
 19 Html5 features and Api have you used
 20. genrator function in javascript
+The generator object manages function execution through its `next()` method. The `yield` keyword within the generator function pauses execution and remembers its state. This allows the function to resume later, continuing from the pause point until completion.
+
+function* addUser(name, age){
+yield `setting user name ${name}`;
+yield `setting user age ${age}`;
+return user name and age;
+}
+
+const generatorFunction = addUser("test", 29);
+generatorFunction.next(); // {value: name, done: false}
+generatorFunction.next(); // {value: age, done: false} => if tried again than {value: undefined, done: true}
+Generator functions in JavaScript provide an effective way to implement lazy loading by yielding values on demand. This pattern can improve performance, especially when dealing with large data sets or asynchronous data sources (API).
+
 21. Pseduo element and classess 
 22 Css speceficity 
 23. CSS framework used like bootstrap
@@ -75,9 +88,20 @@ Use the async pipe in the view.
 27 what are the breakpoint for responsive behaviour 
 28 Responsive grid system
 29 Responsive foreground image, how to handle
+   use srcset and sizes
+   with srcset, provide different version with differnet widths of image
+   <img src="image.jpg"
+         srcset="image-small.jpg 320w,
+                 image-medium.jpg 640w,
+                 image-large.jpg 1024w"
+         sizes= "(max-width= 320px) 280px,
+                  (max-width= 640px) 620px,
+                   800px" />
+   Meida queries, and lazy loading (load image once inside the view port) and cloud with different images
+
 30 what is accessbility 
 31. Approach for responsive development
-32. What is area tag in html
+32. What is area tag in html - for story extra information with legal html schemantic 
 33. Two principle of solid programming
 [S]ingle Responsibility Principle
 [O]pen/Closed Principle
