@@ -118,6 +118,8 @@ Generator functions in JavaScript provide an effective way to implement lazy loa
 41. Javascript added in body tag does it will have any effect on page rendering and removing the effect we use async programming or defer 
 42. Design pattern in javascript like Singaton, facade, modular
 43. temporal dead zone
+The Temporal Dead Zone refers to the period in the execution of a JavaScript program where a variable exists but cannot be accessed. This occurs during the time between the creation of a variable and the point where it is declared.
+var variable hosted but with undefined value, let and const variable hoisted as well but remain unintialized so if trying to access before declaring the variable, it give referenced error
 44. Tree shaking means removing unused code 
 45. Difference between enum iterator and iterator
 46. Difference between obserable and Subject, what is obserable
