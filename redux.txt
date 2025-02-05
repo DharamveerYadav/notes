@@ -60,3 +60,11 @@ import {Provider} from "react-redux";
 <App />
 </Provider>
 
+
+useDispatch() and useSelector() from 'react-redux' inside the component;
+
+const dispatch = useDispatch();
+const tasks = useSelector(state => state.tasks)
+
+now inside the handler dispatch action:
+dispatch(addTask(task))
