@@ -1,8 +1,10 @@
 1. shallow copy and deep copy
-
+Shallow copy only copy first level of object and reference the others, deep copy copy all the levels
+A deep copy can be achieved using JSON.parse() + JSON.stringify():
 
 *************************************************
 If the HttpOnly flag (optional) is included in the HTTP response header, the cookie cannot be accessed through client side script.
+Cross-site scripting (XSS) attacks are often aimed at stealing session cookies. In such an attack, the cookie value is accessed by a client-side script using JavaScript (document.cookie).
 
 Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into otherwise benign and trusted websites.
 
