@@ -96,7 +96,7 @@ const store = {
   state, dispatch
 };
 
-<AppContext.Provider value={store}><App /><AppContext>
+<AppContext.Provider value={store}><App /><AppContext.Provider>
 
 Inside component
 
