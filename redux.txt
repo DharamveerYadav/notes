@@ -1,1 +1,62 @@
+Redux store hold state of your application, your app should subscribe to store but app can not directly change the state of the store.
+
+npm i redux react-redux @reduxjs/toolkit
+
+taskActionTypes.js
+
+export const ADD_TASK = 'ADD_TASK';
+export const REMOVE_TASK = 'REMOVE_TASK';
+
+taskAction.js
+
+export const addTask = (task) => {
+ return {
+     type: ADD_TASK,
+     payload: task
+ }
+}
+
+export const RemoveTask = (taskID) => {
+  return {
+        type: REMOVE_TASK,
+        payload: taskID
+  }
+}
+
+taskReducer.js
+
+export const reducer = (state: initialState, action){
+    switch(action.type){
+      case: 'ADD_TASK'
+       return {
+         ...state,
+        tasks: [...state.tasks, action.payload]
+       }
+     case: 'REMOVE_TASK'
+     return {
+       ...state,
+      tasks: state.tasks.filter(task => task.id != action.payload)
+     }
+    }
+}
+
+
+rootReduce.js
+import {combineReducer} from 'redux';
+
+export const rootReucer = combineReducer({taskReducer: reducer from taskReducer.js})
+
+store.js
+
+import {configureStore} from 'reduxjs/@toolkit';
+
+const store = configureStore({reducer: rootreducer});
+
+Wrap the Root Component with Provider
+index.js
+import {Provider} from "react-redux";
+
+<Provider store={store}>
+<App />
+</Provider>
 
