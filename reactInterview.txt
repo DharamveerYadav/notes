@@ -303,3 +303,39 @@ An Error Boundary in React is therefore defined as a Class Component that define
 Only class components can be error boundaries. 
 
 Fiber is the new reconciliation engine or reimplementation of core algorithm in React v16. The goal of React Fiber is to increase its suitability for areas like animation, layout, gestures, ability to pause, abort, or reuse work and assign priority to different types of updates; and new concurrency primitives.+
+
+************************************************************
+React 18 came in 2022
+use createRoot instead of render
+const container = document.getElementById('app');
+ReactDOM.render(<App />, container);
+
+in React 18
+const root = ReactDOM.createRoot(container);
+root.render(<App />);
+Features:
+concurrency
+auto batching => Previously only handler setState use to batch, now outside batching is also happening
+fetch('url').then((res) => {
+setLoading // render 1
+setResponse // render 2
+})
+Automatic batching is available out of the box in React, but if you want to opt-out you can use flushSync.
+flushSync(()=> {
+// place setState here after which whole react tree will get refersh
+})
+
+
+transition => for prioritize the set Update
+// urgent state update
+setState("hello")
+startTransition(() => {
+setState("tag") // low priority state update
+})
+
+strict mode
+Strict mode in React 18 will simulate mounting, unmounting, and re-mounting the component with a previous state. This sets the ground for reusable state in the future where React can immediately mount a previous screen by remounting trees using the same component state before unmounting.
+
+server side Suspense support => for holding time taking components
+
+
