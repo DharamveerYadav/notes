@@ -90,6 +90,13 @@ retirementAge(66)(1998);
 12. In Method call this keyword point to object but in function call this keyword points to Global object
 13. Destructure Array and Object call destructuring 
  const [name1, name2] = name;
+const a = [1,2,3,4,5,56];
+const [b, ...c] = a;
+const [f, e] = a;
+
+console.log(b); // 1
+console.log(c); // [2,3,4,5,56]
+console.log(e); // 2
  var name = {
         name1: 'test1',
 		name2: 'test2'
@@ -169,7 +176,13 @@ Employee.prototype = Object.create(Person.prototype);  // Object.create allows u
 28. "Use Strict" new feature in ES5, put it either on top of the file or inside in a function 
 29. "getter and setter" accessor or computed properties. They are essentially function that executed on getting and setting a value. but look like regular property to an external code.
 30. The for...in statement is useful for iterating over object properties, but to iterate over iterable objects like arrays and strings, we can use the for...of statement. The for...of statement is a newer feature as of ECMAScript 6.
-
+const a = [1,2,3,4,5,56];
+for (let v  in a){
+  console.log(v); // would be printing index 0,1,2,3,4,5,6
+}
+for (let v  of a){ // used only for iterable object, can not be use for object
+  console.log(v); // would be printing value 1,2,3,4,5,56
+}
 31. Call and Apply used for a function to be run in a specific this context
 const book = {
    title: 'Book title',
