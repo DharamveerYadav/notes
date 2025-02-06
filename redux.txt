@@ -91,6 +91,52 @@ const tasks = useSelector(state => state.taskReducer.tasks)
 
 now inside the handler dispatch action:
 dispatch(addTask(task))
+***************************************************************************
+Testing thunk
+
+// thunks.test.js
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import fetchMock from 'jest-fetch-mock';
+import { fetchData } from './thunks';
+import { fetchDataRequest, fetchDataSuccess, fetchDataFailure } from './actions';
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+fetchMock.enableMocks();
+
+describe('fetchData thunk', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
+
+  it('dispatches fetchDataSuccess action after successful API request', async () => {
+    const mockData = { id: 1, name: 'Example Data' };
+    fetchMock.mockResponse(JSON.stringify(mockData));
+    const expectedActions = [
+      fetchDataRequest(),
+      fetchDataSuccess(mockData)
+    ];
+    const store = mockStore();
+
+    await store.dispatch(fetchData());
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('dispatches fetchDataFailure action after failed API request', async () => {
+    const errorMessage = 'Failed to fetch data';
+    fetchMock.mockReject(new Error(errorMessage));
+    const expectedActions = [
+      fetchDataRequest(),
+      fetchDataFailure(errorMessage)
+    ];
+    const store = mockStore();
+
+    await store.dispatch(fetchData());
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+});
 
 *****************************************************************************
 Redux setup using useReducer and useContext.
