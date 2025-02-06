@@ -51,6 +51,29 @@ store.js
 import {configureStore} from 'reduxjs/@toolkit';
 
 const store = configureStore({reducer: rootreducer});
+or 
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers';
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk)
+);
+
+Thunks are functions that return another function, giving you access to the dispatch function and the Redux store's getState method.
+// thunk action creator
+export const fetchUser(){
+ return async (dispatch, getState) => {
+   dispatch(fetchUserInProgress());
+ try {
+      const response = await axios.get('https://api.example.com/data');
+      dispatch(fetchDataSuccess(response.data));
+    } catch (error) {
+      dispatch(fetchDataFailure(error.message));
+    })
+ }
+}
 
 Wrap the Root Component with Provider
 index.js
