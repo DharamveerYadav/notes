@@ -314,7 +314,10 @@ in React 18
 const root = ReactDOM.createRoot(container);
 root.render(<App />);
 Features:
-concurrency
+concurrent rendering => 
+React 18 with concurrent rendering, React can interrupt, pause, resume, or abandon a render. This allows React to respond to the user interaction quickly even if it is in the middle of a heavy rendering task.
+Before React 18, rendering was a single, uninterrupted, synchronous transaction and once rendering started, it couldn’t be interrupted.
+
 auto batching => Previously only handler setState use to batch, now outside batching is also happening
 fetch('url').then((res) => {
 setLoading // render 1
@@ -338,4 +341,25 @@ Strict mode in React 18 will simulate mounting, unmounting, and re-mounting the 
 
 server side Suspense support => for holding time taking components
 
+*********************************************************************************
+React 19
+
+Fetch Data with use() vs. useEffect
+Fetching data used to require a bit of boilerplate with useEffect. With use(), you just resolve the promise and use React Suspense for a clean, easy data-fetching experience. 🧼 This means less code and more focus on what matters.
+
+use() as useContext();
+
+'use client' and 'use server' component directive;
+
+form action 
+async function action (formData){
+submitHandler(formData)
+}
+<form action={action}>
+
+useFormStatus() => get form status, use for disabling submit button.
+const { pending } = useFormStatus();
+return <button disabled={pending}>Submit</button>;
+
+useOptimistic() : It allows for optimistic updates, making your app feel snappy by updating the UI instantly 
 
