@@ -265,6 +265,14 @@ Closure:::
 Objects are not the only way to produce data privacy. Closures can also be used to create stateful functions whose return values may be influenced by their internal state   
 
 dummy_data_test => dummyDataTest
+const a = "dummy_data_test";
+
+const b = a.split("_").map(item => capatilizeFirstCharactor(item)).join("");
+console.log(b);
+
+function capatilizeFirstCharactor(key) {
+  return key.charAt(0).toUpperCase() + key.slice(1)
+}
 
 /***
  * Print the items in order of number of occurence and equality
