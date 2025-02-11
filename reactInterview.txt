@@ -363,3 +363,34 @@ return <button disabled={pending}>Submit</button>;
 
 useOptimistic() : It allows for optimistic updates, making your app feel snappy by updating the UI instantly 
 
+
+useOptimistic is a React Hook that lets you show a different state while an async action is underway. It accepts a state as an argument and returns a copy of that state that can be different during an async action such as a network request.
+
+const [optimisticState, dispatchFunction] = 
+                            useOptimistic<type>(actualResponse, mutation)
+							
+							
+const [bookings, setBookings] = useState([]);
+  const addBooking = (booking) => {
+    setBookings((bookings) => [...bookings, booking]);
+  };
+  const [optimisticBookings, addOptimisticBooking] = useOptimistic(
+    bookings,
+    (currentBookings, newBooking) => [
+      ...currentBookings,
+      { ...newBooking, status: 'Pending' },
+    ]
+  );	
+
+while calling api   
+const booking = { name: event.target.name.value, date: event.target.date.value };
+addOptimisticBooking(booking);
+
+Using toFixed() Method
+The number of decimal places in float values can be set using the toFixed()
+
+const a = 0;
+a.toFixed(2) // "0.00"
+const b = "0";
+parseFloat(b).toFixed(2); // "0.00"
+
