@@ -1,0 +1,195 @@
+1. NodeJS is event driven, no-blocking (Asynchronous) I/O and cross-platform runtime environment
+2.  const express  = require("express");
+
+     const app = express();
+	 
+	 app.use("/", function(req, res){  // can app.get as well
+	        res.send({
+			 status: 200,
+			 message: "message got successful."
+			})
+	 
+	     });
+		 
+	app.listen(3000, function(){
+	console.log("server has started!!!")
+	
+	})	 
+
+3. run nodeJS in dev mode install mnodemon 	
+4. body-parser lib used to extract body from request parameter 
+     const bodyParser = require("body-parser");
+     app.use(bodyParser.json())
+	 app.use(bodyParser.urlencoded({extened: false}));
+	 
+5. Streams in nodeJS
+Readable, writable, duplex and transform	 
+
+6. Reactor pattern:
+
+A reactor pattern is a concept of non-blocking (I/O) operations. This pattern provide a handler associated with the each I/O operations. as soon as I/O request is generated it is then submitted with the demultiplexer.
+
+7. V8 engine developed by Google in c++. It turns javascript code to machine learning code during execution by utilizing just in time complier. as do many current javascript engines such as spiderMonkey and Rhino ( Mozila).
+
+8. Middleware is a function that takes in a request and response an object.
+
+9. connecting MongoDB client to databse
+
+var MongoClient = require('mongodb').MongoClient;
+MongoClient.connect('connectionURL', (err, db)=> {
+if(err) throw err;
+console.log("Database created!!!");
+db.close();
+
+10. for detecting the environment use NODE_ENV
+
+11. global objects are accessabile without requre or import througout the project, like process, console, buffer.
+
+12. A thread pool is a collection of threads that are used to execute tasks in parallel. In Node.js, the thread pool is handled by the libuv library, which is a multi-platform support library that provides asynchronous I/O operations.
+
+13. Worker threads and clusters are two different approaches to leveraging the power of multiple CPUs in Node.js. While clusters create multiple instances of a Node.js process, each running on a separate CPU core, worker threads provide a way to create multiple threads within a single process.
+})
+
+14. Tracing is a technique used in Node.js to profile the performance of an application. It involves recording the function calls and events that occur during the execution of the application and analyzing the data to identify performance bottlenecks. 
+
+15. Passport is a popular authentication middleware for Node.js. It provides a simple and modular way to implement authentication in Node.js applications. Passport supports many authentication mechanisms, including username/password, social logins like Facebook and Google, and JSON Web Tokens (JWTs).
+
+16. The express.static() function is a built-in middleware function in Express. It serves static files and is based on serve-static. 
+app.use(express.static(path.join(__dirname, 'public')))
+
+17. The primary function of express.json() is to parse requests with a Content-Type header of application/json. Once parsed, the resulting data is stored in the req.body, allowing easy access to the JSON content sent from the client.
+app.use(express.json());
+
+18. The urlencoded function is used to parse the incoming requests with URL-encoded payloads. It is a built-in middleware function in Express based on a body parser module.
+
+When there is a HTTP POST request from the client with content type application/x-www-form-urlencoded, this middleware parses the data and populates the req.body object with key-value pairs.
+
+app.use(express.urlencoded({ extended: false }));
+
+19. const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter {};
+
+const myEmitter = new MyEmitter();
+myEmitter.on('event', ()=> { 
+      console.log('event emitted!!!');	  
+   })
+   
+myEmitter.emit('event');   
+
+20 Spawn() => used for creating new process with a given command, used for real time streaming, 
+  fork() => The fork() method is a specialized version of spawn() that is specifically designed for spawning new Node.js processes. It creates a new instance of the V8 engine to run a separate Node.js script.
+  
+21. getting current working directory => __dirname, ./, process.cwd()
+process.cwd() - Returns the current working directory where the Node.js process was started.
+__dirname - Returns the directory name of the current module (file)  
+
+22. npm ci
+CI stands for clean install and npm ci is used to install all exact version dependencies or devDependencies from a package-lock.json file. It can’t install additional packages or modify the already installed dependencies.
+
+23. A higher order function (HOF) is a function that takes one or more functions as arguments, or returns a function as its result. 
+like map and reduce
+
+24. function composition => chaining of HOF like filter().map()
+
+
+**************************************************************Database
+1. Horizontal / Vertical scalling;:
+
+with SQL only vertical scalling is possible and for NOSql both scalling is possing as there is no scehma to follow.
+
+2. Insert into tab_name (col_name) values (values);
+
+Object Relation mapping library ( Sequelize)
+
+first create models after creating connection
+
+const Products = sequelize.define('products',{
+  id: {
+  type: Sequelize.STRING,
+  autoIncrement: true
+  }
+})
+
+module.exports = Products;
+
+sequelize.create({}) // for inserting the row
+sequelize.findById // .findAll({where: {id: prodId}})
+product.save() // for update or create new row
+product.destroy() // for deleting the row
+
+*****************************************************************MongoDB
+Database => collection => documents
+
+embedded collections/ References
+
+save =d db.collection("products").createOne(object) // .createMany(Array of object)
+
+db.collection("products").find({title: "A book"})
+
+
+Mongoose => A Object document mapping library
+
+const Schema = mongoose.Schema
+const Product = new Schema({
+title: {
+type: String,
+required: true 
+},
+userId: {   // create association with the different schema
+   type: Schema.Types.ObjectId,
+   ref: "User",
+   required: true
+}
+})
+
+module.exports = mongoose.model("product", Product)
+
+product.save() // for saving the record
+find(), findById() // for get record
+findByIdAndRemoved() // for deleting the record
+
+
+if want to populate whole object instead of just id
+product.find().populate("userId").then // will populate whole user object
+product.find().select("title name -_id").populate("userId", "name") // give object with title and name and remove _id explicitly 
+
+ObjectId._doc // to fetch whole object for storing 
+
+
+*****************************************************************
+setting cookies
+
+res.setHeader('Set-Cookie', 'loggedIn=true; Max-Age=10; Secure ; HttpOnly')
+
+cookies are stored in client side
+session are stored in server side
+
+for session use express-session lib
+const session  = require("express-session")
+const MongoDBStore = require("connect-mongodb-session")(session);
+
+const store = MongoDBStore({
+   path: connectionurl,
+   
+})
+
+app.use(
+   session({
+     secret: "abc",
+	 resave: false,
+	 saveUninitialized: false,
+	 store: store
+   })
+)
+
+// logout using session 
+
+req.session.destroy(() => {
+  req.redirect("/");
+})
+
+
+**********jsonwebtoken
+jwt.sign(user, secret, callback)
+jwt.verify(token, secret, callback)
