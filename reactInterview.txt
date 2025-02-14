@@ -394,3 +394,9 @@ a.toFixed(2) // "0.00"
 const b = "0";
 parseFloat(b).toFixed(2); // "0.00"
 
+n React Router 6, a new hook was introduced called useRouteError. This hook allows you to access the current error state of the router.
+
+React useId Hook is introduced for the ReactJS versions above 18. This hook generates unique IDs i.e, returns a string that is stable across both the server and the client sides.
+
+
+
