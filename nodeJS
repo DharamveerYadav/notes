@@ -193,3 +193,224 @@ req.session.destroy(() => {
 **********jsonwebtoken
 jwt.sign(user, secret, callback)
 jwt.verify(token, secret, callback)
+
+
+-------------------------------------
+use bcrypt for password storing
+
+bcrypt.encrypt(passwrod, salt value upto 12)
+
+bcrypt.compare(enteredPassword, user.password) => return true or false
+
+if success 
+req.session.isLoggedIn = true;
+req.session.user = user
+req.session.save().than // for storying in mongo db
+
+which can be pass back to client using cookies and can be used for validating request later point of time.
+
+
+CSRF attack
+cross site request forgery  => stealling session and using it
+use csrf token embed in form and backend will validate it with every req.body._csrf post request
+<input type="hidden" name="_csrf" value="csrfToken" />
+
+
+set default values in all the requst or rendered views 
+app.use((req, res, next) => {
+req.locals.isAuthenticated = req.ression.isLoggedIn;
+req.locals._csrf = req.csrfToken();
+next();
+})
+
+password resetting:
+used inbuild library crapto library and create has value. and story with the user and expiry time
+send reset email to user and validate the has value. and allow to reset value.
+
+
+password validation => use express-validator/ Validator.js to valildate
+
+
+***************************************error handling
+use try-catch for synchronous error
+use than and catch for asynchronous error 
+
+for handling at the middleware level, pass error object to next(err);
+
+and add a middleware at the end with err prop, it will escape all other middleware in between 
+
+app.use((err, req, res, next) => {
+req.redirect("/500")
+})
+
+Error codes:
+
+2XX (success)  => 200 (operation successed) 201(success, resource created)
+3XX (redirect) => 301 (moved permanently )
+4XX (client side error) => 400(bad request) 401 (unauthorized) 403(forbidden) 404(not found) 408(request timeout)
+5XX (server side error) => 500 (server error) 502 Bad Gateway 504 Gateway Timeout
+
+
+***********************************Image upload
+use multer library for 
+set enctype="multipart/form-data"
+
+add middleware aap.use(multer().single('image'))
+
+for downloading file, set response header
+
+res.setHeader("Content-Type", "application/pdf");
+res.setHeader("Content-Disposition", "inline; filename: test.pdf");
+
+
+fs.readFile(invoicePath, (err, data) => {  // will not be good practice as reading big file may be overflow internal memory as it will first copy whole file to memory first
+res.setHeader("Content-Type", "application/pdf");
+res.setHeader("Content-Disposition", "inline; filename: test.pdf");
+
+res.send(data)})
+
+// should be using streaming for the
+
+const file = fs.createReadStream(invoicePath);
+res.setHeader("Content-Type", "application/pdf");
+res.setHeader("Content-Disposition", "inline; filename: test.pdf");
+
+file.pipe(res) // stream will forwad data to res or browser with stream 
+red
+
+
+************************************************************Payment
+use stripe 3rd party library for Payment 
+
+Process =>
+
+request send to stripe => It will validate the card details => return token => add product/ Payment details => send request back to stripe with token => It will process the request
+
+stripe.checkout.sessions.create({
+payment_method_type: ['card'],
+line_items: // product details in array
+})
+
+stripe.redirectToCheckout({
+sessionId: token
+
+})
+
+************************************************************
+use app.use(bodyParser.urlencoded())   // if data is send using <form> tag than default format of data is 
+                                       // x-www-form-urlencoded 
+									   
+CORS: Cross origin resource sharing
+if server and client are running on different server 
+
+
+socket.io for server side, socket.io-client for client side
+
+1. intialize the socket.io
+
+import { Server } from 'socket.io';
+
+const app = express();
+const server = createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+console.log("A user is connected!!!");
+
+})
+
+In client side 
+
+ const socket = io();
+ 
+ // emit a event named 'chat message';
+ 
+ const form = document.getElementById('form');
+  const input = document.getElementById('input');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value) {
+      socket.emit('chat message', input.value);
+      input.value = '';
+    }
+  });
+</script>
+
+// capture the event 
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+  });
+});
+
+*************************************secureing request using Helment
+
+const helmet = require('helmet');
+
+app.use(helmet())
+
+const compression = require('compression');
+
+app.use(compression());
+
+
+SSL/TLS ==> 
+
+use ssl certification fron known certificate provider
+
+server send public key to client and client encript the data using public key and send to server
+server than decript the data using private key 
+
+
+EsModule syntex for importing a file
+
+import express from 'express';
+
+for enabling it use type="module" in package.json
+
+and replace moudule.exports to export default 
+Node.js >= v13
+
+It's very simple in Node.js 13 and above. You need to either:
+
+Save the file with .mjs extension, or
+Add { "type": "module" } in the nearest package.json.
+You only need to do one of the above to be able to use ECMAScript modules.
+
+
+*******************************worker thread vs Child thread
+worker thread run on shared environment, same process, only support javascript, 
+use case like Image processing, Data processing and transformation, Mathematical computations
+
+const { Worker }  from 'worker_threads';
+
+function calculatePrimes(limit) {
+ return new Promise((resolve, reject) => {
+ const worker = new Worker('./primeworker.js', {workerData: limit});
+ worker.on('message', resolve);
+ worker.on('error', reject);
+ })
+}
+
+
+Child Process:
+fully isolated, system level task or external code, communicate using Inter-process communication, understand any scripting language
+
+const { fork } = require('child_process');
+
+const child = fork('./childService.js');
+
+child.on('message', (message) => {
+  console.log('Message from child:', message);
+});
+
+// Send a task to the child process
+child.send({ task: 'processData', payload: [1, 2, 3] });
+
+
+
+Exec is typically used for short-lived processes, while fork and spawn are typically used for long-lived processes.
+Exec allows for capturing the child process’s output and error streams, while fork and spawn stream the output and error streams back to the parent process.
+Fork allows for IPC between the parent and child processes, while exec and spawn do not.
