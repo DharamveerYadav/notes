@@ -1,1 +1,107 @@
+1. Document database
+2. use indexing
+2. JSON objects
+4. Horizonatal scalling 
+
+
+For connecting to database 
+a. user should have read and write access
+b in network access setting, IP should be white list  0.0.0.0/0.0 used for white list for all 
+
+5. Crud operation:
+create => db.collection.insertOne() insertMany()
+read => db.collection.find({query, projection or required columns});  // .pretty() for formatting
+query: {cast: "Belly"}  // if cast is an array 
+{ awards.win: {$gt: 3} } // if award is an object 
+{$and : [first, second]};
+.limit(3) // limiting for 3 records
+.sort({title: 1}) asc => .sort({title: -1}) desc
+
+
+update => db.collection.updateOne({title: {$eq: "my titile"}}, { $set: {title: "my titile updated."}})
+delete => db.collection.deleteOne()
+
+
+db.movie.remove({}) // it will delete whole movie collection 
+
+
+
+
+Sharding is a method for distributing large collection(dataset) and allocating it across multiple servers. It is designed to handle horizontal scaling by partitioning data into smaller, more manageable pieces, which are then spread across multiple servers. This enables MongoDB to handle high-throughput workloads and large datasets that cannot fit on a single server.
+
+Replication and sharding are two key features of MongoDB that enhance data availability, redundancy, and performance. Replication involves duplicating data across multiple servers by ensuring high availability and fault tolerance. On the other hand, sharding distributes large datasets across several servers to manage large volumes of data and handle high throughput operations.
+
+
+mongoimport --db mydatabase --collection mycollection --file data.json
+
+mongoexport --db mydatabase --collection mycollection --out data.json
+
+The aggregation pipeline is a framework for data aggregation, modeled on the concept of data processing pipelines.
+db.orders.aggregate([
+  { $match: { status: "A" } },           // Stage 1: Filter documents by status
+  { $group: { _id: "$cust_id", total: { $sum: "$amount" } } },  // Stage 2: Group by customer ID and sum the amount
+  { $sort: { total: -1 } }               // Stage 3: Sort by total in descending order
+])
+
+
+Capped collections in MongoDB are fixed-size collections that automatically overwrite the oldest documents when the specified size limit is reached. They maintain insertion order and are useful for scenarios where you need to store a fixed amount of recent data, such as logging, caching, or monitoring data.
+
+db.createCollection("logs", { capped: true, size: 100000 });
+
+Mongodump/Mongorestore: Use the mongodump and mongorestore utilities to create and restore binary backups.
+File System Snapshots: Use file system snapshots to take consistent backups of the data files.
+Cloud Backups: If using MongoDB Atlas, leverage automated backups provided by the service.
+Replica Sets: Use replica sets to ensure data redundancy and high availability. Regularly test the failover and recovery process.
+
+
+Change Streams in MongoDB allow applications to listen for real-time changes to data in collections, databases, or entire clusters. 
+
+const changeStream = db.collection('orders').watch();
+changeStream.on('change', (change) => {
+  console.log(change);
+});
+
+
+Find the Department with the Highest Average Salary.
+db.employees.aggregate([
+    { $group: { _id: "$department", averageSalary: { $avg: "$salary" } } },
+    { $sort: { averageSalary: -1 } },
+    { $limit: 1 }
+])
+
+Find the Highest and Lowest Salary in the "Engineering" Department.
+db.employees.aggregate([
+    { $match: { department: "Engineering" } },
+    {
+        $group: {
+            _id: null,
+            highestSalary: { $max: "$salary" },
+            lowestSalary: { $min: "$salary" }
+        }
+    }
+])
+
+
+
+
+
+MovieModel.aggregate([
+  { "$match": { "m_title": m_title } },
+  { "$lookup": {
+    "from": RankMovieModel.collection.name,
+    "localField": "_id",
+    "foreignField": "movie",
+    "as": "rankings"
+  }},
+  { "$unwind": "$rankings" }
+])
+
+
+// {"$match" : {
+       "$text":  {$search: "hello"}}  // will to complete search not specefic to any columns
+	
+{ "$project": {
+       "completeName": "$fullName"   // will rename fullname to complete name
+
+}	
 
