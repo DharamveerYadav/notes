@@ -351,6 +351,10 @@ const helmet = require('helmet');
 
 app.use(helmet())
 
+Content-Security-Policy: default-src 'self';base-uri 'self';font-src '  // help me xss, script inject, With this policy, your web pages cannot load remote fonts or styles. This is because font-src and style-src are set to self
+Referrer-Policy: no-referrer //  no source information, normally source url is there
+Strict-Transport-Security: max-age=15552000; includeSubDomains
+
 const compression = require('compression');
 
 app.use(compression());
@@ -414,3 +418,10 @@ child.send({ task: 'processData', payload: [1, 2, 3] });
 Exec is typically used for short-lived processes, while fork and spawn are typically used for long-lived processes.
 Exec allows for capturing the child process’s output and error streams, while fork and spawn stream the output and error streams back to the parent process.
 Fork allows for IPC between the parent and child processes, while exec and spawn do not.
+
+The fork method will open an IPC channel allowing message passing between Node processes:
+
+On the child process, process.on(‘message’) and process.send(‘message to parent’) can be used to receive and send data
+On the parent process, child.on(‘message’) and child.send(‘message to child’) are used
+
+Spawn create fresh new node process, while fork, fork the parent process and create new process.
