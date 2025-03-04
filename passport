@@ -1,6 +1,8 @@
 Passport is authentication middleware for Node.js.
 
 Install the passport and relevant passport-* strategy packages for the desired authentication methods (e.g., passport-local for username/password).
+Passport is a middleware for express.js. It supports various login types, Basic, Token, Local (username, password), OAuth, OAuth2, etc. We can combine these to allow users to authenticate by signing in with Google, FB, or whatever service with very minimal amount of code. We can also use this to combine external auth services so users can choose to login with one of the selected Strategies, e.g. Google, Twitter. It's much quicker to use passport for authentication than to build one yourself from scratch. This is why we use passport. You don't need passport, it just makes developing quicker.
+If you're just using the local strategy, yeah, no point. But when you have requirements to auth with google, fb, twitter, local, and maybe some other sites logins, it ends up being a lot of code written for a task that has been done many times before.
 
  const passport = require('passport');
  const LocalStrategy = require('passport-local').Strategy;
