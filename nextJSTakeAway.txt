@@ -55,11 +55,33 @@ default use static site generation - store the cache
             create route.js file 
 			both page.js and route.js can not be at same place ( expect root level)
 			Simply rite GET, POST method and return Response. not need to setup xtra express configuration 
+export async function POST(req, res) {
+   return NextResponse.json({ message: "POST Request" }, { status: 200 })
+}
 			
 7. Metadata api
 	static and dynamic 
     for static export metadaya attribute
     for dynamic export generateMetadata	
+
+export async function generateMetadata(
+    { params }: { params: { id: string } }
+): Promise<Metadata> {
+
+    const id = params.id;
+    const { data } = await axios.get < ProjectType > (`${server}/projects/${id}`);
+    const previousImages = (await parent).openGraph?.images || [];
+    return {
+        title: data.title,
+        keywords: [
+            data.category,
+            data.title,
+        ],
+        openGraph: {
+            images: [data.image, ...previousImages],
+        },
+    };
+}
 
 
 8. steps in client side rendering
@@ -67,7 +89,7 @@ server send request to browser => browser than download the javascript => execut
 but for server side rendering 
 server send ready to be rendered HTML response to browser => browser render the html, page is visible => Browser download the javascript and execute the React => page become interactive this process is call hydration 
 
-9. getStaticProps always run to server side for static content, will generate ready to use html
+9. getStaticProps always run to server side for static content, will generate ready to use html at build time
 
 10. getServerSideProps run at request time if data update frequently
 
