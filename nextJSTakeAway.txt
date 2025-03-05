@@ -403,3 +403,8 @@ const email = formData.get("email)
 const {pending } = useformStatus() ==> current form status, use for disabling button 
 useActionState
 useOptimistic hook 
+You can use the React useOptimistic hook to optimistically update the UI before the Server Action finishes executing, rather than waiting for the response:
+const [optimisticMessages, addOptimisticMessage] = useOptimistic<
+    Message[],
+    string
+  >(messages, (state, newMessage) => [...state, { message: newMessage }])
