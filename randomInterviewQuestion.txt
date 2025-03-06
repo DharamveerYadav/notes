@@ -154,4 +154,24 @@ If empty object will return, it will not update the value of input comp as value
 
 Uncontrolled components are best for simplicity, but might not fit situations when a component needs to be cleared or pre-populated with data. Controlled components give you more opportunities to update the data, but can add another level of abstraction that may cause unintentional bugs or re-renders.
 
-*****************************************************************
+***************************************************************** 
+CI/CD devops
+CI - continous integration build  + testing 
+it combine 3 process/ stages => build, testing and deploy
+
+azure_pipeline.yaml
+
+name: wired Brain
+
+trigger: 
+  -main   // will trigger on every main branch push
+  
+stages:
+  
+   -stage: BuildAndTest
+    jobs:
+    - job: Build
+      pool: 
+        vmImage: 'ubunto-latest'
+      steps:
+      - task: UseDorNet	
