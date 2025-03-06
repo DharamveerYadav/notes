@@ -40,6 +40,28 @@ test.privateVar()
 The difference between call() and bind() is that the call() sets the this keyword and executes the function immediately and it does not create a new copy of the function, 
 while the bind() creates a copy of that function and sets the this keyword.
 
+The call method is used to call a function and specify the “this” value for the function. It takes two arguments: the value to be used as the “this” value inside the function, and an optional list of arguments to be passed to the function.
+
+The apply method is similar to the call method, but instead of specifying the arguments to the function individually, it takes an array of arguments to be passed to the function.
+
+The bind method is used to create a new function with the same body as the original function, but with a different “this” value. It also takes an optional list of arguments to be passed to the new function when it is called.
+
+function greet(greeting) {
+console.log(greeting + ' ' + this.name);
+}
+
+const person1 = {
+name: "john"
+}
+
+const person2 = {
+name: "Bill"
+}
+
+greet.call(person1, 'welcome') // welcome john
+greet.apply(person2, ['hello']) // hello Bill
+const greatPerson = greet.bind(person1);
+greetPerson('Good morning'); // Good morning john;
 
 3. what is Grunt, Gulp and webpack 
 4. What is Jamine, Mocha and karma
