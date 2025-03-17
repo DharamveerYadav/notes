@@ -425,3 +425,172 @@ On the child process, process.on(‘message’) and process.send(‘message to p
 On the parent process, child.on(‘message’) and child.send(‘message to child’) are used
 
 Spawn create fresh new node process, while fork, fork the parent process and create new process.
+
+
+CI/CD pipeline
+
+1. Build
+2. Test
+3. Deploy 
+
+Inside Build proces:
+
+aure_pipeline.yaml
+
+name: wired Brain
+
+trigger: 
+  -main
+  
+stages:
+  
+   -stage: BuildAndTest
+    jobs:
+    - job: Build
+      pool: 
+        vmImage: 'ubunto-latest'
+      steps:
+      - task: UseDorNet	  
+  
+  
+Microservice: 
+
+Microservices are small, autonomous service that work together.
+
+key characteristics 
+small, bounded context, loosely coupled, Autonomous
+each service should have sperate database
+communication through api only 
+
+drawbacks of monolithic application:
+
+1. Lack of partial scalability
+2. Lack of language flexiablity 
+3. Long development cycles 
+4. Lack of fault isolation
+
+bounded context: define the boundaries of each microservice and aling them with specific business requirement.
+scalability
+
+
+for communication use message broker and queues 
+RabbitMQ and kafka 
+
+
+RabbitMQ is one the most popular message brokers that runs on top of Advanced Message Queuing Protocol (AMQP).
+main components forming AMQP protocol: Publisher, Exchange, Queue, Consumer.
+Use cases for RabbitMQ encompass areas like order processing in eCommerce, real-time notifications, and multiplayer gaming, showcasing its adaptability to different operational needs.
+
+
+https://dev.to/pharzad/introduction-to-rabbitmq-for-node-js-developers-1clm   // just go through this link for RabbitMQ
+
+running nodejs application in multi-threaded mode
+
+Child processes launch another application (not necessarily a JavaScript one), pass data, and receive a result typically via a callback. They operate in a similar way to workers, but they’re generally less efficient and more process-intensive, because they’re dependent on processes outside Node.js. There may also be OS differences and incompatibilities. Node.js has three general child process types with synchronous and asynchronous variations:
+spawn: spawns a new process
+exec: spawns a shell and runs a command within it
+fork: spawns a new Node.js process
+
+JavaScript runtimes use a single processing thread, which can cause bottlenecks in Node.js apps handling multiple user requests. Multithreading can help prevent these bottlenecks.
+Node.js worker threads allow for asynchronous processing on a separate thread, improving performance. However, they can’t handle complex objects like database connections, and data must be serialized when passed to and from a worker.
+Node.js child processes can launch another application, pass data, and receive a result. They are less efficient than workers and more process-intensive, but can be used when dependent on processes outside Node.js.
+Node.js clusters allow forking of identical processes to handle loads more efficiently. They can also handle restarts when an instance fails and broker communication between forked processes, but code can become increasingly complex.
+Process managers and container orchestration can run multiple instances of a Node.js application without having to write cluster code, making them ideal for live servers. Containers emulate an operating system, allowing an application to run on a single device or across thousands of machines.
+
+
+
+NodeMailer is the most popular npm module for sending emails from Node.js applications, with over three million downloads a week. It requires an SMTP server to send emails.
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp.freesmtpservers.com',
+  port: 25
+});
+
+try {
+
+  const send = await transporter.sendMail({
+    from: '"Test Email" <test@email.com>',  // sender address
+    to: 'someone@example.com',              // list of receivers
+    subject: 'Hello!',                      // subject line
+    text: 'Hello world!',                   // plain text body
+    html: '<p>Hello world!</p>',            // HTML body
+  });
+  
+  https://www.sitepoint.com/sending-email-using-node-js/
+  
+  __________________________________________________________________________________________
+  
+  Redis, short for Remote Dictionary Server, is an open-source, in-memory data store.
+  
+  Redis is renowned for its exceptional speed, making it an ideal choice for caching and real-time applications.
+  
+  / Node.js code for caching with Redis
+const redis = require('redis');
+const client = redis.createClient();
+
+// Middleware to check the cache before fetching data
+function checkCache(req, res, next) {
+    const key = req.path;
+    // Check if data is in cache
+    client.get(key, (err, data) => {
+        if (err) throw err;
+        if (data) {
+            // Data found in cache, use it
+            res.json(JSON.parse(data));
+        } else {
+            // Data not in cache, fetch from an API (placeholder URL)
+            fetch('https://api.example.com' + req.path)
+                .then((response) => response.json())
+                .then((data) => {
+                    // Store data in cache for future use (with an expiration time of 1 hour)
+                    client.setex(key, 3600, JSON.stringify(data));
+                    res.json(data);
+                })
+                .catch((error) => {
+                    res.status(500).json({ error: 'An error occurred while fetching data.' });
+                });
+        }
+    });
+}
+// Endpoint for fetching data with caching
+app.get('/api/data', checkCache, (req, res) => {
+    // This code will only execute if the data is not in the cache
+    console.log('Fetching data from the API...');
+});
+
+Session Management
+Redis is also adept at handling session management in web applications. Storing session data in Redis ensures scalability and session persistence.
+
+// Node.js code for session management with Redis
+const redis = require('redis');
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+
+// Create a Redis session store
+const client = redis.createClient();
+const sessionStore = new RedisStore({ client });
+// Use it with Express.js
+app.use(session({
+    store: sessionStore,
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+}));
+
+
+Real-time Analytics
+Redis’s speed and support for data structures make it an excellent choice for real-time analytics.
+
+You can use Redis to store counters, collect metrics, and generate real-time reports, as demonstrated below:
+// Node.js code for real-time analytics with Redis
+const redis = require('redis');
+const client = redis.createClient();
+
+// Increment a counter
+client.incr('pageViews', (err, count) => {
+    if (err) throw err;
+    // Use the updated count for real-time reporting
+    console.log(`Total Page Views: ${count}`);
+});
+  
