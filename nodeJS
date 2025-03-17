@@ -1,4 +1,9 @@
 1. NodeJS is event driven, no-blocking (Asynchronous) I/O and cross-platform runtime environment
+asynchronous or blocking operations are delegated outside the main thread and are called upon completion at a subsequent stage. 
+ Asynchronous operation handling is achieved through callbacks and event emitters, allowing Node.js to continue processing other tasks while waiting for I/O operations to complete.
+When an asynchronous operation is initiated, Node.js registers a callback and continues to the next task.
+The system, upon completion of the operation, places the callback in the event queue. 
+
 2.  const express  = require("express");
 
      const app = express();
