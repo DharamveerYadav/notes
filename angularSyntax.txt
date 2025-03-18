@@ -1,3 +1,5 @@
+Angular life cycle hooks:
+
 Constructor
 ngOnChange
 ngOnInit
@@ -32,3 +34,61 @@ this.form = fb.group({
      "firstName" = new FormControl("", Validator.required);
 	 "password" =  new FormControl("", Validator.required);
 })
+
+
+class memeber are public by default, mark private if want it 
+angular cli command _ ng new sampleApp
+application default run on localhost:4200
+
+@component({
+selector: 'app-root',
+templateUrl: './app.component.html',
+styleUrl: ['./app.component.css']
+})
+
+cli command for generating component: ng generate component home,
+@NgModule({
+declaration: [AppComponent, HomeComponent],
+imports: [ BrowserModule],
+providers: [],
+bootstrap: [AppComponent]
+})
+
+for component prefix: app in angular.json 
+})
+
+1. Interpolition: binding html to property use with {{}}
+2. attribute binding [alt] = "property.alt"
+3. angular directives ngClass, *ngIf, *ngFor="let product of products"  
+     structure directive with *, 
+[ngClass] = "{className: product.discount > 0, className2: product.price < 1000}"
+[class.className] = "product.discount > 0"
+4. use pipes for formating {{product.price | currencey:'INR'}}
+
+5. communication between child and parent component:
+@Input() product: string;
+on parent:
+<child-comp [product]="product" (buy)="method to use"></child-comp>
+
+@output() buy = new EventEmitter();
+
+and call this.buy.emit();
+
+6. for services use 
+@Injectable({
+providedIn: 'root'
+})
+export class CartService {
+constructure(){}
+}
+Can be use by two ways: dependency injection through constructor and function injection
+private crtSer = inject(CartService);
+
+constructure(private crtSer: CartService)
+
+7. Observable - dealing with async data
+
+8. RouterModule
+const router = [
+{ path: "add-item", component: AddItemComponent, title: "add item "}
+]
