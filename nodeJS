@@ -281,7 +281,33 @@ res.setHeader("Content-Type", "application/pdf");
 res.setHeader("Content-Disposition", "inline; filename: test.pdf");
 
 file.pipe(res) // stream will forwad data to res or browser with stream 
-red
+******************************************************************************Streams and Buffers
+
+const server = http.createServer((req, res) => {
+  if (req.method === 'POST' && req.url === '/uploadProfilePhoto') {
+    const filename = path.basename(req.headers['x-file-name']);
+    const fileSize = parseInt(req.headers['x-file-size'], 10);
+    const outputPath = path.join(__dirname, 'uploads', 'profilePhotos', filename);
+
+    const output = fs.createWriteStream(outputPath);
+    let uploadedBytes = 0;
+
+    req.on('data', (chunk) => {
+      uploadedBytes += chunk.length;
+      output.write(chunk);
+    });
+
+    req.on('end', () => {
+      output.end();
+      res.end(JSON.stringify({ message: 'Photo uploaded successfully' }));
+    });
+  }
+
+Buffer just collect the data and store in the memory, fs.readFile() => will use whole file in buffer, if file is big we will get error
+for for streaming, data stream in chunks and these chunks are buffer only with smaller size
+Buffers are an abstraction that allows us to deal with raw binary data in Node.js. 
+A buffer represents a chunk of memory that is allocated to our computer. The size of the buffer, once set, cannot be changed. A buffer is used to store bytes.
+
 
 
 ************************************************************Payment
