@@ -32,7 +32,13 @@ Readable, writable, duplex and transform
 
 6. Reactor pattern:
 
-A reactor pattern is a concept of non-blocking (I/O) operations. This pattern provide a handler associated with the each I/O operations. as soon as I/O request is generated it is then submitted with the demultiplexer.
+Reactor Pattern is used to avoid the blocking of the Input/Output operations. It provides us with a handler that is associated with I/O operations. When the I/O requests are to be generated, they get submitted to a demultiplexer, which handles concurrency in avoiding the blocking of the I/O mode and collects the requests in form of an event 
+
+The exit code can be either 0 or 1. 0 means end the process without any kind of failure and 1 means end the process with some failure.
+console.log("Running..."); 
+process.on('exit', function(code){ 
+    return console.log(`Exiting with code ${code}`); 
+});
 
 7. V8 engine developed by Google in c++. It turns javascript code to machine learning code during execution by utilizing just in time complier. as do many current javascript engines such as spiderMonkey and Rhino ( Mozila).
 
@@ -456,7 +462,15 @@ On the child process, process.on(‘message’) and process.send(‘message to p
 On the parent process, child.on(‘message’) and child.send(‘message to child’) are used
 
 Spawn create fresh new node process, while fork, fork the parent process and create new process.
+spawn(): Launches a new process with a given command.
+fork(): Similar to spawn(), but creates a new Node.js process, making it suitable for spawning new Node.js instances.
+exec(): Executes a shell command and buffers the output.
 
+Use Child Processes when you need to execute external commands or scripts that need to run independently of the parent process. They are also useful for isolating code that may crash without affecting the main application.
+
+Use Clusters when building a scalable web server or application that needs to utilize all available CPU cores. Clusters are ideal for handling high levels of concurrency while maintaining high availability and resilience.
+
+Use Worker Threads when your application requires efficient handling of CPU-intensive tasks, such as data processing, without blocking the event loop. They are best for tasks that involve complex computations or require parallel execution without the overhead of creating separate processes.
 
 CI/CD pipeline
 
