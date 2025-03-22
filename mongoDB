@@ -115,3 +115,82 @@ MovieModel.aggregate([
      }
 }
 
+**********************************************************************************
+
+https://www.w3resource.com/mongodb-exercises/
+
+{
+  "address": {
+     "building": "1007",
+     "coord": [ -73.856077, 40.848447 ],
+     "street": "Morris Park Ave",
+     "zipcode": "10462"
+  },
+  "borough": "Bronx",
+  "cuisine": "Bakery",
+  "grades": [
+     { "date": { "$date": 1393804800000 }, "grade": "A", "score": 2 },
+     { "date": { "$date": 1378857600000 }, "grade": "A", "score": 6 },
+     { "date": { "$date": 1358985600000 }, "grade": "A", "score": 10 },
+     { "date": { "$date": 1322006400000 }, "grade": "A", "score": 9 },
+     { "date": { "$date": 1299715200000 }, "grade": "B", "score": 14 }
+  ],
+  "name": "Morris Park Bake Shop",
+  "restaurant_id": "30075445"
+}
+
+1. Write a MongoDB query to find the average score for each restaurant.
+
+.aggregate([
+{$unwind: "grades"},
+{$group: {
+"_id": "$name",
+"avgScore": {$avg: "grades.score"}
+}}
+])
+The $unwind stage is used to "unwind" an array field grades in the restaurants collection. As a result, a separate document will be created for each grade in the restaurants collection.
+The $group stage groups the documents by the name field and calculates the average score of all the grades for each restaurant using the $avg operator.
+
+2. Write a MongoDB query to find the highest score for each restaurant.
+.aggregate([
+{$unwind: "grades"},
+{$group: {
+"_id": "$name",
+"maxScore": {$max: "grades.score"}
+}}
+])
+3. Write a MongoDB query to find the count of restaurants in each borough.
+.aggregate([
+{$group: {
+"_id": "$borough",
+"count": {$sum: 1}
+}}
+])
+
+4. Write a MongoDB query to find the name and address of the restaurants that have at least one 'A' grade and one 'B' grade.
+db.restaurants.find({
+  $and: [
+{ "grades.grade": "A" },
+{ "grades.grade": "B" }
+  ]
+},
+{ name: 1, address: 1, _id: 0 })
+
+5. Write a MongoDB query to find the name and address of the restaurants that have the word 'coffee' in their name.
+db.restaurants.find({ name: { $regex: /coffee/i } }, { name: 1, address: 1 })
+//({"name": "/^Will/"}); // first 3 letter  "/ces$/" last 3 letter, { "cuisine": { $regex: /^B/ } }, 
+
+6. Write a MongoDB query to find the restaurants achieved highest average score.
+db.restaurants.aggregate([
+  {$unwind: "$grades"},
+  {$group: {
+    _id: "$restaurant_id",
+avgScore: {$avg: "$grades.score"}
+  }},
+  {$sort: {avgScore: -1}},
+  {$limit: 1},
+  {$project: {_id: 1, avgScore: 1}}
+])
+
+
+
