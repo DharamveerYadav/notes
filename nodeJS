@@ -529,6 +529,21 @@ Use cases for RabbitMQ encompass areas like order processing in eCommerce, real-
 
 https://dev.to/pharzad/introduction-to-rabbitmq-for-node-js-developers-1clm   // just go through this link for RabbitMQ
 
+const rabbit = require('amqplib');
+const QUEUE_NAME = 'square';
+const EXCHANGE_TYPE = 'direct';
+const EXCHANGE_NAME = 'main';
+const KEY = 'myKey';
+const number = '5'
+connection = rabbit.connect('amqp://localhost');
+connection.then(async (conn)=>{
+   const channel = await conn.createChannel();
+   await channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE);
+   await channel.assertQueue(QUEUE_NAME);
+   channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, KEY);
+   channel.sendToQueue(QUEUE_NAME, Buffer.from(number))
+})
+
 running nodejs application in multi-threaded mode
 
 Child processes launch another application (not necessarily a JavaScript one), pass data, and receive a result typically via a callback. They operate in a similar way to workers, but they’re generally less efficient and more process-intensive, because they’re dependent on processes outside Node.js. There may also be OS differences and incompatibilities. Node.js has three general child process types with synchronous and asynchronous variations:
