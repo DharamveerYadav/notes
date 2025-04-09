@@ -202,4 +202,92 @@ db.collection.aggregate([
 ])
 
 
+****************************************************************************************************
+db.singers.insert(
+  {
+    _id : 4,
+    artistname : "UVW"
+   }
+)
+
+db.instruments.insert(
+{
+    _id : 9,
+    singer_name : "GHI",
+    instrument : [ "Accordion", "Jaw Harps", "Keyboards" ],
+    artist_id : 4
+  }
+)
+
+db.instruments.insert(
+  {
+    _id : 10,
+    name : "ABC",
+    instrument : [ "Banjo", "Cello" ],
+    artist_id : 4
+  }
+)
+
+db.instruments.insert(
+ {
+    _id : 11,
+    name : "LMN",
+    instrument : "Membranophones",
+    artist_id : 4
+  }
+)
+
+db.singers.aggregate([
+  {
+     $lookup:
+       {
+         from: "instruments",
+         localField: "_id",
+         foreignField: "artist_id",
+         as: "band_members"
+       }
+        },
+        { $match : { artistname : "UVW" } }
+]).pretty()
+
+{
+“_id” : 4,
+“artistname” : “UVW”,
+“band_members” : [
+{
+“_id” : 9,
+“singer_name” : “GHI”,
+“instrument” : [ “Accordion”, “Jaw Harps”, “Keyboards” ],
+“artist_id” : 4
+}, will be containing  all the band memebers
+
+
+*************************************************************working with mongoose with ref
+var personSchema = Schema({
+  _id: Schema.type.ObjectId,
+  name: String,
+  age: Number,
+  stories: [{type: Schema.type.ObjectId, ref: "Story" }]
+  
+});
+
+var storySchema = Schema({
+  auther: {type: Schema.type.ObjectId, ref: "Person"},
+  title: String,
+  fans: [{type: Schema.type.ObjectId, ref: "person"}]
+})
+
+var Person = mongoose.model('Story', personSchema)
+var Story = mongoose.model('Story', storySchema)
+
+Story.findOne({"title": "Mr. Beast"}
+ .populate("auther")
+ .exec(function(err, story){
+   if(err) return err;
+   console.log('The author is %s', story.author.name);
+// prints "The author is Ian Fleming"
+ })
+)
+
+
 
