@@ -30,7 +30,10 @@ db.movie.remove({}) // it will delete whole movie collection
 Sharding is a method for distributing large collection(dataset) and allocating it across multiple servers. It is designed to handle horizontal scaling by partitioning data into smaller, more manageable pieces, which are then spread across multiple servers. This enables MongoDB to handle high-throughput workloads and large datasets that cannot fit on a single server.
 
 Replication and sharding are two key features of MongoDB that enhance data availability, redundancy, and performance. Replication involves duplicating data across multiple servers by ensuring high availability and fault tolerance. On the other hand, sharding distributes large datasets across several servers to manage large volumes of data and handle high throughput operations.
-
+Replication Architecture in MongoDB:
+In the preceding model, the PRIMARY database is the only active replica set member that receives write operations from database clients. The PRIMARY database saves data changes in the Oplog. Changes saved in the Oplog are sequential—that is, saved in the order that they are received and executed. 
+The SECONDARY database is querying the PRIMARY database for new changes in the Oplog. If there are any changes, then Oplog entries are copied from PRIMARY to SECONDARY as soon as they are created on the PRIMARY node.
+Then, the SECONDARY database applies changes from the Oplog to its own datafiles. Oplog entries are applied in the same order they were inserted in the log. As a result, datafiles on SECONDARY are kept in sync with changes on PRIMARY. 
 
 mongoimport --db mydatabase --collection mycollection --file data.json
 
