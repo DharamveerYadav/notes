@@ -60,7 +60,16 @@ const changeStream = db.collection('orders').watch();
 changeStream.on('change', (change) => {
   console.log(change);
 });
-
+// resurantes with score greater 90,
+db.collection.find({
+  "grades": {
+    "$elemMatch": {
+      "score": {
+        "$gt": 90
+      }
+    }
+  }
+})
 
 Find the Department with the Highest Average Salary.
 db.employees.aggregate([
