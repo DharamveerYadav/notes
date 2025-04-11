@@ -44,7 +44,8 @@ connection.then(async (conn)=>{
    })
 })
 
-once after acknoleging the message, queue will remove that message, other wise it will be there always and whenever a new consumer will come, it will pass that message to it.
+once after acknoleging the message, queue will remove that message, other wise it will be there always and whenever a new consumer will come, i
+t will pass that message to it.
 
 four type of Exchange is there:
 Direct, work on routing key, route message using routing key to specefic queue
@@ -57,3 +58,21 @@ Topic exchanges are similar to direct, but they use patterns instead of exact ma
 Similar to direct exchanges, pattern is not specified on exchange level, but for each of binding separately.
 For example, if binding pattern is aaa.*, it will match messages with routing keys aaa.bbb, aaa.ccc, but not aaa.bbb.ccc. However, 
 if pattern is aaa.#, it will also match aaa.bbb.ccc.
+
+5. Dead Letter Exchanges - 
+"Dead-letter exchanges in RabbitMQ are special exchanges where messages are routed when they cannot be delivered to their intended queue. 
+They help in handling message failures by allowing you to inspect and reprocess undeliverable messages."
+Messages from a queue can be "dead-lettered", which means these messages are republished to an exchange when any of the following four events occur.
+The message is negatively acknowledged by an AMQP 1.0 receiver using the rejected outcome or by an AMQP 0.9.1 consumer using basic.reject or basic.
+nack with requeue parameter set to false, or
+The message expires due to per-message TTL, or
+The message is dropped because its queue exceeded a length limit, or
+The message is returned more times to a quorum queue than the delivery-limit.
+If an entire queue expires, the messages in the queue are not dead-lettered.
+
+message retries in RabbitMQ, you can use dead-letter exchanges to capture failed messages and implement retry logic. By configuring retry intervals and maximum retry attempts, 
+you can ensure reliable message delivery and fault tolerance."
+
+
+"To monitor RabbitMQ performance and health, you can use RabbitMQ's built-in management plugin for real-time monitoring. Additionally, integrating external tools like 
+Prometheus and Grafana provides advanced metrics and alerts for comprehensive monitoring."
