@@ -1,4 +1,5 @@
-RabbitMQ:  user ampqlib, a message broker with asynchronous and synchronous messages
+Advanced Message Queuing Protocol (AMQP)
+RabbitMQ:  user amqplib, a message broker with asynchronous and synchronous messages
 help in communicating API's
 
 There is 4 part/ steps in it/
@@ -8,16 +9,40 @@ Queue
 Consumer
 
 Publisher publish the message
-const ampq = require('ampqlib');
-make connection using ampq.connect('connection string')
+const ampq = require('amqplib');
+make connection using amqp.connect('connection string')
 create channel, using existing channel if is there 
 use connection.createChannel(), once channel is there
 create exchange using assertExchange and pass routing key(use for direct exchange, ingnored for fanout exchange)
 and publish the message
 
+connection = rabbit.connect('amqp://localhost');
+connection.then(async (conn)=>{
+   const channel = await conn.createChannel();
+   await channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE);
+   await channel.assertQueue(QUEUE_NAME);
+   channel.bindQueue(QUEUE_NAME, EXCHANGE_NAME, KEY);
+channel.sendToQueue(QUEUE_NAME, Buffer.from(number))
+})
+
+
 in consumer side or microservice side
 create connection => assertExchange with the same name => assert queues with routing keys 
 and consume the message 
+
+
+const rabbit = require('amqplib');
+const QUEUE_NAME = 'square';
+connection = rabbit.connect('amqp://localhost');
+connection.then(async (conn)=>{
+   const channel = await conn.createChannel();
+   channel.consume(QUEUE_NAME, (m)=>{
+       const number = parseInt(m.content.toString())
+       const square = number * number
+       console.log(square)
+       channel.ack(m)
+   })
+})
 
 once after acknoleging the message, queue will remove that message, other wise it will be there always and whenever a new consumer will come, it will pass that message to it.
 
@@ -25,3 +50,10 @@ four type of Exchange is there:
 Direct, work on routing key, route message using routing key to specefic queue
 Fanout, work like broadcaster, will ignore the routing key
 Header
+For this kind of exchange, routing key is not consulted at all. Instead, it tries to match values in message headers. Since headers are key-value pairs, 
+both key and value must match key-value specified in a binding.
+Topic
+Topic exchanges are similar to direct, but they use patterns instead of exact matching. Pattern is a list of words separated by dots - aaa.bbb.ccc. 
+Similar to direct exchanges, pattern is not specified on exchange level, but for each of binding separately.
+For example, if binding pattern is aaa.*, it will match messages with routing keys aaa.bbb, aaa.ccc, but not aaa.bbb.ccc. However, 
+if pattern is aaa.#, it will also match aaa.bbb.ccc.
