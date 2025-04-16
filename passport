@@ -40,6 +40,9 @@ passport.deserializeUser((id, done) => {
  done(null, user);
  });
 
+Serialization saves user information (e.g., user ID) into the session, reducing session storage size. 
+Deserialization fetches the full user object from the database using the serialized ID when processing a request.
+
  app.post('/login',
  passport.authenticate('local', {
  successRedirect: '/profile',
