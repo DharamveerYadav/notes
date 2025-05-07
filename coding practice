@@ -1,0 +1,117 @@
+1. Design an Express middleware function rateLimiter that limits the number of API requests from a specific IP address. For example, only allow a maximum of 100 requests per 10 minutes per IP.
+  If the limit is exceeded, return an HTTP 429 (Too Many Requests) error.
+
+
+  const rateLimiter = (maxRequests, windowMs) => {
+  const clients = new Map(); // Store IP and request count
+
+  return (req, res, next) => {
+    const ip = req.ip;
+    const now = Date.now();
+
+    if (!clients.has(ip)) {
+      clients.set(ip, { count: 1, firstRequest: now });
+      next();
+    } else {
+      const clientData = clients.get(ip);
+      const timeSinceFirstRequest = now - clientData.firstRequest;
+
+      if (timeSinceFirstRequest > windowMs) {
+        // Reset window
+        clients.set(ip, { count: 1, firstRequest: now });
+        next();
+      } else if (clientData.count < maxRequests) {
+        clientData.count++;
+        next();
+      } else {
+        res.status(429).send("Too Many Requests - Try again later");
+      }
+    }
+  };
+};
+
+// Usage in Express
+const express = require("express");
+const app = express();
+
+app.use(rateLimiter(100, 10 * 60 * 1000)); // 100 requests per 10 minutes
+
+app.get("/", (req, res) => res.send("Hello World!"));
+
+app.listen(3000, () => console.log("Server running on port 3000"));
+
+
+******************************************
+
+2. Build a debounce utility function that delays the execution of a function until after a specified wait time has passed since the last invocation. 
+Use this to implement a search bar in a React application that fetches API results only after the user stops typing for 500ms.
+
+export function debounce(fn, delay) {
+  let timerId;
+  return function (...args) {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => fn(...args), delay);
+  };
+}
+
+  const fetchResults = debounce((query) => {
+    console.log(`Fetching results for: ${query}`);
+    // API call here
+  }, 500);
+
+  const onInputChange = (e) => {
+    const value = e.target.value;
+    setTerm(value);
+    fetchResults(value);
+  };
+
+***********************************************************
+3. Given a 2D matrix, return all elements in "spiral order". For example: Input:
+[
+ [1, 2, 3],
+ [4, 5, 6],
+ [7, 8, 9]
+]
+output: 
+[1, 2, 3, 6, 9, 8, 7, 4, 5]
+
+function spiralOrder(matrix) {
+  const result = [];
+  if (!matrix.length) return result;
+
+  let top = 0;
+  let bottom = matrix.length - 1;
+  let left = 0;
+  let right = matrix[0].length - 1;
+
+  while (top <= bottom && left <= right) {
+    for (let i = left; i <= right; i++) result.push(matrix[top][i]);
+    top++;
+
+    for (let i = top; i <= bottom; i++) result.push(matrix[i][right]);
+    right--;
+
+    if (top <= bottom) {
+      for (let i = right; i >= left; i--) result.push(matrix[bottom][i]);
+      bottom--;
+    }
+
+    if (left <= right) {
+      for (let i = bottom; i >= top; i--) result.push(matrix[i][left]);
+      left++;
+    }
+  }
+
+  return result;
+}
+
+// Example Usage
+const matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
+console.log(spiralOrder(matrix)); // Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+
+************************************************************************
+4. 
